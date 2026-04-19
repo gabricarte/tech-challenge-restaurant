@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -39,4 +40,7 @@ public abstract class User {
 
     @Column(nullable = false)
     private String address;
+
+    @UpdateTimestamp
+    private LocalDateTime lastUpdate;
 }

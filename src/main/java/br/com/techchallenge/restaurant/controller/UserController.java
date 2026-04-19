@@ -29,4 +29,10 @@ public class UserController {
         userService.validarLogin(login, senha);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        userService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

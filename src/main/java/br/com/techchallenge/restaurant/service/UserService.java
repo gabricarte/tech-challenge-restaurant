@@ -40,4 +40,10 @@ public class UserService {
         user.setPassword(novaSenha);
         usuarioRepository.save(user);
     }
+
+    public void deletar(Long id) {
+        User user = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        usuarioRepository.delete(user);
+    }
 }
