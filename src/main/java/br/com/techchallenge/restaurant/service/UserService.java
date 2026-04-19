@@ -1,30 +1,30 @@
 package br.com.techchallenge.restaurant.service;
 
 import br.com.techchallenge.restaurant.domain.entity.User;
-import br.com.techchallenge.restaurant.exception.LoginInvalidoException;
-import br.com.techchallenge.restaurant.exception.UsuarioNaoEncontradoException;
-import br.com.techchallenge.restaurant.repository.UsuarioRepository;
+import br.com.techchallenge.restaurant.exception.InvalidLoginException;
+import br.com.techchallenge.restaurant.exception.UserNotFoundException;
+import br.com.techchallenge.restaurant.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService {
+public class UserService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository usuarioRepository;
 
     public void validarLogin(String login, String senha) {
         User user = usuarioRepository.findByLogin(login)
-                .orElseThrow(() -> new LoginInvalidoException());
+                .orElseThrow(() -> new InvalidLoginException());
 
         if (!user.getPassword().equals(senha)) {
-            throw new LoginInvalidoException();
+            throw new InvalidLoginException();
         }
     }
 
     public User atualizarDados(Long id, User novosDados) {
         User user = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         user.setName(novosDados.getName());
         user.setEmail(novosDados.getEmail());
@@ -35,7 +35,7 @@ public class UsuarioService {
 
     public void trocarSenha(Long id, String novaSenha) {
         User user = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         user.setPassword(novaSenha);
         usuarioRepository.save(user);
