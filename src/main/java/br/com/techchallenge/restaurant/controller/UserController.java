@@ -1,5 +1,6 @@
 package br.com.techchallenge.restaurant.controller;
 
+import br.com.techchallenge.restaurant.domain.dto.UserRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.UserResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.User;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
@@ -19,11 +20,10 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @PutMapping("/{id}/dados")
-    @Operation(summary = "Atualizar dados do usuário")
-    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody User user) {
-        User userAtualizado = userService.atualizarDados(id, user);
-        return ResponseEntity.ok(userMapper.toDTO(userAtualizado));
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody UserRequestDTO dto) {
+        UserResponseDTO response = userService.atualizarDados(id, dto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
