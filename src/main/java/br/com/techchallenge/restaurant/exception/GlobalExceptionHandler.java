@@ -49,4 +49,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<String> handleRestaurantNotFound(RestaurantNotFoundException ex) {
+        return ResponseEntity.status(403).body(ex.getMessage());
+    }
 }

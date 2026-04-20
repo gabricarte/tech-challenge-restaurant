@@ -1,9 +1,10 @@
 package br.com.techchallenge.restaurant.service;
 
+import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.User;
 import br.com.techchallenge.restaurant.exception.InvalidLoginException;
 import br.com.techchallenge.restaurant.exception.UserNotFoundException;
-import br.com.techchallenge.restaurant.repository.UserRepository;
+import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    private UserRepository usuarioRepository;
+    private OwnerRepository ownerRepository;
 
     public void validarLogin(String login, String senha) {
-        User user = usuarioRepository.findByLogin(login)
+        User user = ownerRepository.findByLogin(login)
                 .orElseThrow(() -> new InvalidLoginException());
 
         if (!user.getPassword().equals(senha)) {
@@ -23,27 +24,30 @@ public class UserService {
     }
 
     public User atualizarDados(Long id, User novosDados) {
-        User user = usuarioRepository.findById(id)
+        User user = ownerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         user.setName(novosDados.getName());
         user.setEmail(novosDados.getEmail());
         user.setAddress(novosDados.getAddress());
 
-        return usuarioRepository.save(user);
+
+        return ownerRepository.save((Owner) user);
     }
 
     public void trocarSenha(Long id, String novaSenha) {
-        User user = usuarioRepository.findById(id)
+        User user = ownerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         user.setPassword(novaSenha);
-        usuarioRepository.save(user);
+
+        ownerRepository.save((Owner) user);
     }
 
     public void deletar(Long id) {
-        User user = usuarioRepository.findById(id)
+        User user = ownerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
-        usuarioRepository.delete(user);
+
+        ownerRepository.delete((Owner) user);
     }
 }

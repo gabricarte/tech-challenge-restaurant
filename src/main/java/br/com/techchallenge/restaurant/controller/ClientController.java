@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/clientes")
-@Tag(name = "Cliente", description = "Endpoints para gestão de Clientes")
+@RequestMapping("/api/v1/client")
+@Tag(name = "Client", description = "Endpoints para gestão de Clientes")
 public class ClientController {
 
     private final ClientService clientService;
