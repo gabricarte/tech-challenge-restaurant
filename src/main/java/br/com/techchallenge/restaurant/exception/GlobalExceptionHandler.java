@@ -54,4 +54,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleRestaurantNotFound(RestaurantNotFoundException ex) {
         return ResponseEntity.status(403).body(ex.getMessage());
     }
+    @ExceptionHandler(RestaurantOverCapacityException.class)
+    public ResponseEntity<String> handleOverCapacity(RestaurantOverCapacityException ex) {
+        return ResponseEntity.status(403).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
+        return ResponseEntity.status(404).body(ex.getMessage());
+    }
 }

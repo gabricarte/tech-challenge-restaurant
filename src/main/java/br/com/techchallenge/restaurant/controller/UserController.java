@@ -1,7 +1,10 @@
 package br.com.techchallenge.restaurant.controller;
 
+import br.com.techchallenge.restaurant.domain.dto.UserResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.User;
+import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +16,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PatchMapping("/{id}/dados")
-    public ResponseEntity<User> atualizar(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.atualizarDados(id, user));
+    @Autowired
+    private UserMapper userMapper;
+
+    @PutMapping("/{id}/dados")
+    @Operation(summary = "Atualizar dados do usuário")
+    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody User user) {
+        User userAtualizado = userService.atualizarDados(id, user);
+        return ResponseEntity.ok(userMapper.toDTO(userAtualizado));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar usuário por ID")
+    public ResponseEntity<UserResponseDTO> buscarPorId(@PathVariable Long id) {
+        User user = userService.buscarPorId(id);
+        return ResponseEntity.ok(userMapper.toDTO(user));
     }
 
     @PatchMapping("/{id}/senha")

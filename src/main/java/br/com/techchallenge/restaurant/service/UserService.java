@@ -5,11 +5,16 @@ import br.com.techchallenge.restaurant.domain.entity.User;
 import br.com.techchallenge.restaurant.exception.InvalidLoginException;
 import br.com.techchallenge.restaurant.exception.UserNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
+import br.com.techchallenge.restaurant.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private OwnerRepository ownerRepository;
@@ -23,16 +28,13 @@ public class UserService {
         }
     }
 
-    public User atualizarDados(Long id, User novosDados) {
-        User user = ownerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    public Owner atualizarDados(Long id, User dados) {
+        Owner ownerExistente = buscarPorId(id);
 
-        user.setName(novosDados.getName());
-        user.setEmail(novosDados.getEmail());
-        user.setAddress(novosDados.getAddress());
+        ownerExistente.setName(dados.getName());
+        ownerExistente.setEmail(dados.getEmail());
 
-
-        return ownerRepository.save((Owner) user);
+        return ownerRepository.save(ownerExistente);
     }
 
     public void trocarSenha(Long id, String novaSenha) {
@@ -44,10 +46,13 @@ public class UserService {
         ownerRepository.save((Owner) user);
     }
 
-    public void deletar(Long id) {
-        User user = ownerRepository.findById(id)
+    public Owner buscarPorId(Long id) {
+        return ownerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+    }
 
-        ownerRepository.delete((Owner) user);
+    public void deletar(Long id) {
+        Owner owner = buscarPorId(id);
+        ownerRepository.delete(owner);
     }
 }
