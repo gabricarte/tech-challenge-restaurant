@@ -48,12 +48,12 @@ public class UserService {
     }
 
     public void trocarSenha(Long id, String novaSenha) {
-        User user = ownerRepository.findById(id)
+        Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
-        user.setPassword(novaSenha);
+        owner.setPassword(novaSenha);
 
-        ownerRepository.save((Owner) user);
+        ownerRepository.save(owner);
     }
 
     public Owner buscarPorId(Long id) {
@@ -62,7 +62,8 @@ public class UserService {
     }
 
     public void deletar(Long id) {
-        Owner owner = buscarPorId(id);
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
         ownerRepository.delete(owner);
     }
 }
