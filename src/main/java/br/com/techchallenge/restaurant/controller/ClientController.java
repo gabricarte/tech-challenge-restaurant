@@ -45,11 +45,4 @@ public class ClientController {
     public ResponseEntity<ClientResponseDTO> atualizar(@PathVariable Long id, @RequestBody ClientRequestDTO dto) {
         return ResponseEntity.ok(clientService.atualizarDados(id, dto));
     }
-
-    @PatchMapping("/{id}/senha")
-    @Operation(summary = "Altera a senha do cliente")
-    public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
-        clientService.trocarSenha(id, novaSenha);
-        return ResponseEntity.noContent().build();
-    }
 }

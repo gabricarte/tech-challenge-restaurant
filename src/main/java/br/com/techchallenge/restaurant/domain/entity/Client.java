@@ -3,10 +3,7 @@ package br.com.techchallenge.restaurant.domain.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -14,9 +11,13 @@ import java.time.LocalDate;
 @Table(name = "tb_client")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Client extends User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
+    private String cpf;
+    private String telefone;
 }
