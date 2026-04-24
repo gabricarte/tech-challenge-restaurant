@@ -13,7 +13,7 @@ import java.util.Map;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OwnerNotFoundException.class)
-    public ResponseEntity<Object> handleDonoNotFound(OwnerNotFoundException ex) {
+    public ResponseEntity<Object> handleOwnerNotFound(OwnerNotFoundException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
@@ -21,8 +21,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ClientNotFoundException.class)
-    public ResponseEntity<Object> handleClienteNotFound(ClientNotFoundException ex) {
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<Object> handleCustomerNotFound(CustomerNotFoundException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(InvalidLoginException.class)
-    public ResponseEntity<Object> handleLoginInvalido(InvalidLoginException ex) {
+    public ResponseEntity<Object> handleInvalidLogin(InvalidLoginException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.UNAUTHORIZED.value());

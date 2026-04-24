@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @Setter
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Client extends User {
+public class Customer extends User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
     private String cpf;
-    private String telefone;
+    private String telephone;
 }

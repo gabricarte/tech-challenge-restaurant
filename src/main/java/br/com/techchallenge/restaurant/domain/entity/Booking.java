@@ -15,7 +15,7 @@ public class Booking {
 
     private LocalDateTime dateTime;
     private Integer numberOfPeople;
-    private String status; // Ex: "CONFIRMED", "CANCELLED"
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
