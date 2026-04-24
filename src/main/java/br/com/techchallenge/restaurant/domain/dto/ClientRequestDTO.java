@@ -8,6 +8,7 @@ public record ClientRequestDTO(
         String cpf,
         String login,
         String telefone,
+        String address,
         String password,
         LocalDate birthDate
 ) {}

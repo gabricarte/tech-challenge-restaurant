@@ -25,6 +25,9 @@ public class ClientMapper {
         client.setLogin(dto.login());
         client.setPassword(dto.password());
         client.setBirthDate(dto.birthDate());
+        client.setAddress(dto.address());
+        client.setCpf(dto.cpf());
+        client.setTelefone(dto.telefone());
         return client;
     }
 }
