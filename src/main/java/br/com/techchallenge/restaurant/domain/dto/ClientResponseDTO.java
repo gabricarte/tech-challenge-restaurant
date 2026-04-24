@@ -7,6 +7,5 @@ public record ClientResponseDTO(
         String login,
         String name,
         String email,
-        String cpf,
         LocalDate birthDate
 ) {}

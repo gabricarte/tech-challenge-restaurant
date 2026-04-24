@@ -23,16 +23,15 @@ public class ClientController {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastra um novo cliente")
     public ResponseEntity<ClientResponseDTO> save(@RequestBody ClientRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(dto));
     }
 
     @GetMapping
-    @Operation(summary = "Lista todos os clientes")
     public ResponseEntity<List<ClientResponseDTO>> findAll() {
         return ResponseEntity.ok(clientService.findAll());
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um cliente pelo ID")

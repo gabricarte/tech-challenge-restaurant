@@ -3,11 +3,11 @@ package br.com.techchallenge.restaurant.service;
 import br.com.techchallenge.restaurant.domain.entity.Client;
 import br.com.techchallenge.restaurant.domain.dto.ClientRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.ClientResponseDTO;
-import br.com.techchallenge.restaurant.exception.ClientNotFoundException;
 import br.com.techchallenge.restaurant.mapper.ClientMapper;
 import br.com.techchallenge.restaurant.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class ClientService {
@@ -20,37 +20,33 @@ public class ClientService {
         this.clientMapper = clientMapper;
     }
 
-    public void registrarCliente(ClientRequestDTO dto) {
-        Client client = new Client();
-        client.setName(dto.name());
-        client.setEmail(dto.email());
-        client.setLogin(dto.login());
-        client.setPassword(dto.password());
-        client.setBirthDate(dto.birthDate());
+    @Transactional
+    public ClientResponseDTO save(ClientRequestDTO dto) {
+        Client client = clientMapper.toEntity(dto);
+        return clientMapper.toDTO(clientRepository.save(client));
+    }
 
-        clientRepository.save(client);
+    public List<ClientResponseDTO> findAll() {
+        return clientRepository.findAll().stream()
+                .map(clientMapper::toDTO)
+                .toList();
+    }
+
+    public ClientResponseDTO findById(Long id) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return clientMapper.toDTO(client);
     }
 
     @Transactional
     public ClientResponseDTO atualizarDados(Long id, ClientRequestDTO dto) {
-        Client clientExistente = clientRepository.findById(id)
-                .orElseThrow(() -> new ClientNotFoundException(id));
-
-        clientExistente.setName(dto.name());
-        clientExistente.setEmail(dto.email());
-        clientExistente.setAddress(dto.cpf());
-        clientExistente.setBirthDate(dto.birthDate());
-
-        Client clienteAtualizado = clientRepository.save(clientExistente);
-        return clientMapper.toDTO(clienteAtualizado);
-    }
-
-    @Transactional
-    public void trocarSenha(Long id, String novaSenha) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new ClientNotFoundException(id));
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-        client.setPassword(novaSenha);
-        clientRepository.save(client);
+        client.setName(dto.name());
+        client.setEmail(dto.email());
+        client.setBirthDate(dto.birthDate());
+
+        return clientMapper.toDTO(clientRepository.save(client));
     }
 }
