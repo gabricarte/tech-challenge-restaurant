@@ -45,31 +45,81 @@ Consistência das operações CRUD
 
 ---
 
+Detalhamento dos Endpoints (Postman)
+
+### 📬 Endpoints da API
+
 Endpoints da API
-
 👤 Owner
-GET /restaurant/owner
+Cadastrar Proprietário
+POST /api/v1/owners
 
+JSON
+{
+  "name": "Leticia Gabriela",
+  "email": "leticia@teste.com",
+  "login": "leticiagabriela",
+  "password": "pompompurin123",
+  "address": "Rua do Tech Challenge, 123"
+}
 👥 Customer
-POST /customers — Registrar cliente
+Registrar Cliente
+POST /api/v1/customers
 
+JSON
+{
+  "name": "Galera fiap",
+  "email": "fiap@test.com",
+  "login": "galera_fiap",
+  "password": "senhaSegura123",
+  "birthDate": "1998-10-15",
+  "address": "Rua da Fiap, 123",
+  "cpf": "12345678900",
+  "telefone": "11999999999"
+}
 👤 User
-GET /users/{id} — Buscar usuário por ID
+Buscar usuário por ID
+GET /api/v1/users/{id}
 
-PUT /users/{id} — Atualizar usuário
+Atualizar usuário
+PUT /api/v1/users/{id}
 
-DELETE /users/{id} — Remover usuário
+Remover usuário
+DELETE /api/v1/users/{id}
 
-PATCH /users/{id}/password — Alterar senha
+Alterar senha
+PATCH /api/v1/users/{id}/password
 
+JSON
+{
+  "newPassword": "pompompurin123"
+}
 🔐 Auth
-POST /auth/login — Autenticação
+Autenticação (Login)
+POST /api/v1/users/login
 
 🍽️ Restaurant
-GET /restaurants — Listar restaurantes
+Listar Restaurantes
+GET /api/v1/restaurants/{id}
 
+JSON
+{
+  "name": "Pizzaria legabi - Edição Especial",
+  "address": "Rua das Flores, 123",
+  "cuisineType": "Italiana",
+  "capacity": 50,
+  "ownerName": "Leticia Gabriela"
+}
 📦 Booking
-POST /bookings — Criar novo pedido
+Criar novo pedido
+POST /api/v1/bookings
+
+JSON
+{
+  "customerName": "Leticia",
+  "numberOfPeople": 40,
+  "dateTime": "2026-04-20T20:00:00"
+}
 
 ---
 
