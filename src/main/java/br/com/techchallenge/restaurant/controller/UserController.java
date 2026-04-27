@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toDTO(user));
     }
 
-    @PatchMapping("/{id}/senha")
+    @PatchMapping("/{id}/password")
     public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
         userService.trocarSenha(id, novaSenha);
         return ResponseEntity.noContent().build();

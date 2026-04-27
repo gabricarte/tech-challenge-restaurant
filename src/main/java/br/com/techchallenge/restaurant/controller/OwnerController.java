@@ -46,7 +46,7 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.atualizarDados(id, dto));
     }
 
-    @PatchMapping("/{id}/senha")
+    @PatchMapping("/{id}/password")
     @Operation(summary = "Altera a senha do proprietário")
     public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
         ownerService.trocarSenha(id, novaSenha);
