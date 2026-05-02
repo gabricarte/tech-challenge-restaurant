@@ -11,10 +11,13 @@ public class CustomerMapper {
     public CustomerResponseDTO toDTO(Customer customer) {
         return new CustomerResponseDTO(
                 customer.getId(),
+                customer.getLogin(),
+                customer.getCpf(),
+                customer.getTelephone(),
                 customer.getName(),
                 customer.getEmail(),
-                customer.getCpf(),
-                customer.getBirthDate()
+                customer.getBirthDate(),
+                customer.getLastUpdate()
         );
     }
 

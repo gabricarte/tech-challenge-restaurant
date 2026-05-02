@@ -1,55 +1,63 @@
 package br.com.techchallenge.restaurant.service;
 
+import br.com.techchallenge.restaurant.domain.dto.RestaurantResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
 import br.com.techchallenge.restaurant.exception.RestaurantNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserNotFoundException;
+import br.com.techchallenge.restaurant.mapper.RestaurantMapper;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
 
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    @Autowired
-    private OwnerRepository ownerRepository;
+    private final OwnerRepository ownerRepository;
 
-    public Restaurant cadastrar(Restaurant restaurant, Long ownerId) {
+    private final RestaurantMapper restaurantMapper;
+
+    public RestaurantResponseDTO save(Restaurant restaurant, Long ownerId) {
         Owner owner = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new UserNotFoundException(ownerId));
+                .orElseThrow(UserNotFoundException::new);
 
         restaurant.setOwner(owner);
-        return restaurantRepository.save(restaurant);
+        return restaurantMapper.toDTO(restaurantRepository.save(restaurant));
     }
 
-    public Restaurant buscarPorId(Long id) {
-        return restaurantRepository.findById(id)
-                .orElseThrow(() -> new RestaurantNotFoundException(id));
+    public Restaurant findEntityById(Long id) {
+        return restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 
-    public List<Restaurant> listarTodos() {
-        return restaurantRepository.findAll();
+    public RestaurantResponseDTO findById(Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
+
+        return restaurantMapper.toDTO(restaurant);
     }
 
-    public Restaurant atualizar(Long id, Restaurant restauranteAtualizado) {
-        Restaurant restauranteExistente = buscarPorId(id);
-
-        restauranteExistente.setName(restauranteAtualizado.getName());
-        restauranteExistente.setAddress(restauranteAtualizado.getAddress());
-        restauranteExistente.setCuisineType(restauranteAtualizado.getCuisineType());
-        restauranteExistente.setCapacity(restauranteAtualizado.getCapacity());
-
-        return restaurantRepository.save(restauranteExistente);
+    public List<RestaurantResponseDTO> listAll() {
+        return restaurantRepository.findAll().stream().map(restaurantMapper::toDTO).toList();
     }
 
-    public void excluir(Long id) {
-        Restaurant restaurante = buscarPorId(id);
-        restaurantRepository.delete(restaurante);
+    public RestaurantResponseDTO update(Long id, Restaurant updatedRestaurant) {
+        Restaurant existingRestaurant = findEntityById(id);
+
+        existingRestaurant.setName(updatedRestaurant.getName());
+        existingRestaurant.setAddress(updatedRestaurant.getAddress());
+        existingRestaurant.setCuisineType(updatedRestaurant.getCuisineType());
+        existingRestaurant.setCapacity(updatedRestaurant.getCapacity());
+
+        return restaurantMapper.toDTO(restaurantRepository.save(existingRestaurant));
+    }
+
+    public void delete(Long id) {
+        Restaurant restaurant = findEntityById(id);
+        restaurantRepository.delete(restaurant);
     }
 }

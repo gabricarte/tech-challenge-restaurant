@@ -1,10 +1,10 @@
 package br.com.techchallenge.restaurant.domain.dto;
 
-import java.time.LocalDate;
-
 import jakarta.validation.constraints.*;
 
-public record CustomerRequestDTO(
+import java.time.LocalDate;
+
+public record CustomerUpdateRequestDTO(
         @NotBlank(message = "O nome é obrigatório")
         String name,
 
@@ -24,10 +24,6 @@ public record CustomerRequestDTO(
 
         @NotBlank(message = "O endereço é obrigatório")
         String address,
-
-        @NotBlank(message = "A senha é obrigatória")
-        @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
-        String password,
 
         @NotNull(message = "A data de nascimento é obrigatória")
         @Past(message = "A data de nascimento deve ser uma data no passado")

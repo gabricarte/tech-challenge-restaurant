@@ -4,32 +4,33 @@ import br.com.techchallenge.restaurant.domain.entity.Booking;
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
 import br.com.techchallenge.restaurant.exception.RestaurantOverCapacityException;
 import br.com.techchallenge.restaurant.repository.BookingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookingService {
-    @Autowired
-    private BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;
 
-    @Autowired
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
-    public Booking realizarReserva(Booking booking, Long restaurantId) {
-        Restaurant restaurant = restaurantService.buscarPorId(restaurantId);
+    public Booking createBooking(Booking booking, Long restaurantId) {
+        Restaurant restaurant = restaurantService.findEntityById(restaurantId);
 
-        Integer ocupacaoAtual = bookingRepository.sumPeopleByRestaurantAndDateTime(restaurantId, booking.getDateTime());
-        if (ocupacaoAtual == null) ocupacaoAtual = 0;
+        Integer currentOccupation = bookingRepository.sumPeopleByRestaurantAndDateTime(restaurantId, booking.getDateTime());
 
-        int vagasRestantes = restaurant.getCapacity() - ocupacaoAtual;
+        if (currentOccupation == null) currentOccupation = 0;
 
-        if (booking.getNumberOfPeople() > vagasRestantes) {
+        int availableSeats = restaurant.getCapacity() - currentOccupation;
+
+        if (booking.getNumberOfPeople() > availableSeats) {
             throw new RestaurantOverCapacityException("Capacidade insuficiente! O restaurante possui apenas "
-                    + (vagasRestantes < 0 ? 0 : vagasRestantes) + " vagas disponíveis para este horário.");
+                    + (Math.max(availableSeats, 0)) + " vagas disponíveis para este horário.");
         }
 
         booking.setRestaurant(restaurant);
         booking.setStatus("CONFIRMED");
+
         return bookingRepository.save(booking);
     }
 }
