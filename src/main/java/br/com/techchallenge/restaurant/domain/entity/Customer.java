@@ -3,20 +3,21 @@ package br.com.techchallenge.restaurant.domain.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tb_client")
+@Table(name = "tb_customer")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Client extends User {
+public class Customer extends User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
+    private String cpf;
+    private String telephone;
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+
 @Entity
 @Table(name = "tb_owner")
 @Data
