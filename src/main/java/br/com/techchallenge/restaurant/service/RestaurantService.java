@@ -2,8 +2,8 @@ package br.com.techchallenge.restaurant.service;
 
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.RestaurantNotFoundException;
-import br.com.techchallenge.restaurant.exception.UserNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,36 +20,45 @@ public class RestaurantService {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    public Restaurant cadastrar(Restaurant restaurant, Long ownerId) {
+    public Restaurant create(Restaurant restaurant, Long ownerId) {
+
         Owner owner = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new UserNotFoundException(ownerId));
+                .orElseThrow(() -> new OwnerNotFoundException(ownerId));
 
         restaurant.setOwner(owner);
+
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant buscarPorId(Long id) {
+    public Restaurant findById(Long id) {
+
         return restaurantRepository.findById(id)
                 .orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 
-    public List<Restaurant> listarTodos() {
+    public List<Restaurant> findAll() {
+
         return restaurantRepository.findAll();
     }
 
-    public Restaurant atualizar(Long id, Restaurant restauranteAtualizado) {
-        Restaurant restauranteExistente = buscarPorId(id);
+    public Restaurant update(Long id, Restaurant updatedRestaurant) {
 
-        restauranteExistente.setName(restauranteAtualizado.getName());
-        restauranteExistente.setAddress(restauranteAtualizado.getAddress());
-        restauranteExistente.setCuisineType(restauranteAtualizado.getCuisineType());
-        restauranteExistente.setCapacity(restauranteAtualizado.getCapacity());
+        Restaurant existingRestaurant = findById(id);
 
-        return restaurantRepository.save(restauranteExistente);
+        existingRestaurant.setName(updatedRestaurant.getName());
+        existingRestaurant.setAddress(updatedRestaurant.getAddress());
+        existingRestaurant.setCuisineType(updatedRestaurant.getCuisineType());
+        existingRestaurant.setCapacity(updatedRestaurant.getCapacity());
+        existingRestaurant.setOpeningTime(updatedRestaurant.getOpeningTime());
+        existingRestaurant.setClosingTime(updatedRestaurant.getClosingTime());
+
+        return restaurantRepository.save(existingRestaurant);
     }
 
-    public void excluir(Long id) {
-        Restaurant restaurante = buscarPorId(id);
-        restaurantRepository.delete(restaurante);
+    public void delete(Long id) {
+
+        Restaurant restaurant = findById(id);
+
+        restaurantRepository.delete(restaurant);
     }
 }
