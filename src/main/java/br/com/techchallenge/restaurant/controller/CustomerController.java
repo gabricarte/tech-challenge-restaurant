@@ -1,7 +1,7 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.CustomerRequestDTO;
-import br.com.techchallenge.restaurant.domain.dto.CustomerResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

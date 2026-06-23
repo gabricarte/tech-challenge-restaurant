@@ -1,14 +1,15 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.UserRequestDTO;
-import br.com.techchallenge.restaurant.domain.dto.UserResponseDTO;
-import br.com.techchallenge.restaurant.domain.entity.User;
+
+import br.com.techchallenge.restaurant.domain.dto.request.UserRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.UserResponseDTO;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -20,29 +21,35 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable Long id, @RequestBody UserRequestDTO dto) {
-        UserResponseDTO response = userService.atualizarDados(id, dto);
-        return ResponseEntity.ok(response);
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody Map<String, String> body) {
+        String login = body.get("login");
+        String password = body.get("password");
+
+        userService.validarLogin(login, password);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar usuário por ID")
-    public ResponseEntity<UserResponseDTO> buscarPorId(@PathVariable Long id) {
-        User user = userService.buscarPorId(id);
-        return ResponseEntity.ok(userMapper.toDTO(user));
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                userMapper.toDTO(userService.buscarPorId(id))
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody UserRequestDTO dto) {
+        return ResponseEntity.ok(
+                userService.atualizarDados(id, dto)
+        );
     }
 
     @PatchMapping("/{id}/password")
-    public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
-        userService.trocarSenha(id, novaSenha);
+    public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        String newPassword = body.get("newPassword");
+        userService.trocarSenha(id, newPassword);
         return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestParam String login, @RequestParam String senha) {
-        userService.validarLogin(login, senha);
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

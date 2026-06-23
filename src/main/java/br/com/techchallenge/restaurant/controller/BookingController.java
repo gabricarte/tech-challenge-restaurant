@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.BookingResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.BookingResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Booking;
 import br.com.techchallenge.restaurant.mapper.BookingMapper;
 import br.com.techchallenge.restaurant.repository.BookingRepository;
@@ -26,13 +26,13 @@ public class BookingController {
     private BookingRepository bookingRepository;
 
     @PostMapping("/{restaurantId}")
-    public ResponseEntity<BookingResponseDTO> realizarReserva(@RequestBody Booking booking, @PathVariable Long restaurantId) {
-        Booking novaReserva = bookingService.realizarReserva(booking, restaurantId);
-        return ResponseEntity.status(201).body(bookingMapper.toDTO(novaReserva));
+    public ResponseEntity<BookingResponseDTO> create(@RequestBody Booking booking, @PathVariable Long restaurantId) {
+        Booking newBooking = bookingService.create(booking, restaurantId);
+        return ResponseEntity.status(201).body(bookingMapper.toDTO(newBooking));
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingResponseDTO>> listarTodas() {
+    public ResponseEntity<List<BookingResponseDTO>> findAll() {
         List<Booking> bookings = bookingRepository.findAll();
         List<BookingResponseDTO> dtos = bookings.stream()
                 .map(bookingMapper::toDTO)

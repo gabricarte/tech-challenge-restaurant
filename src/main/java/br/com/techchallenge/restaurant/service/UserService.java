@@ -1,7 +1,7 @@
 package br.com.techchallenge.restaurant.service;
 
-import br.com.techchallenge.restaurant.domain.dto.UserRequestDTO;
-import br.com.techchallenge.restaurant.domain.dto.UserResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.UserRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.UserResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.User;
 import br.com.techchallenge.restaurant.exception.InvalidLoginException;

@@ -1,4 +1,4 @@
-package br.com.techchallenge.restaurant.domain.dto;
+package br.com.techchallenge.restaurant.domain.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

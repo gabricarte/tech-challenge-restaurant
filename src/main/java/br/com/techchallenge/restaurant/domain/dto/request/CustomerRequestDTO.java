@@ -1,4 +1,4 @@
-package br.com.techchallenge.restaurant.domain.dto;
+package br.com.techchallenge.restaurant.domain.dto.request;
 
 import java.time.LocalDate;
 

@@ -1,8 +1,8 @@
 package br.com.techchallenge.restaurant.service;
 
 import br.com.techchallenge.restaurant.domain.entity.Customer;
-import br.com.techchallenge.restaurant.domain.dto.CustomerRequestDTO;
-import br.com.techchallenge.restaurant.domain.dto.CustomerResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
 import org.springframework.stereotype.Service;

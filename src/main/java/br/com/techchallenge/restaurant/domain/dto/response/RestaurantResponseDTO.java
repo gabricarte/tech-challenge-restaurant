@@ -1,4 +1,4 @@
-package br.com.techchallenge.restaurant.domain.dto;
+package br.com.techchallenge.restaurant.domain.dto.response;
 
 public record RestaurantResponseDTO(
         Long id,

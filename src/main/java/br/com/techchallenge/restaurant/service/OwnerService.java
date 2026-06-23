@@ -1,8 +1,8 @@
 package br.com.techchallenge.restaurant.service;
 
 import br.com.techchallenge.restaurant.domain.entity.Owner;
-import br.com.techchallenge.restaurant.domain.dto.OwnerRequestDTO;
-import br.com.techchallenge.restaurant.domain.dto.OwnerResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.OwnerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.OwnerResponseDTO;
 import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import org.springframework.stereotype.Service;

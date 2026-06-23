@@ -15,17 +15,17 @@ public class BookingService {
     @Autowired
     private RestaurantService restaurantService;
 
-    public Booking realizarReserva(Booking booking, Long restaurantId) {
-        Restaurant restaurant = restaurantService.buscarPorId(restaurantId);
+    public Booking create(Booking booking, Long restaurantId) {
+        Restaurant restaurant = restaurantService.findById(restaurantId);
 
-        Integer ocupacaoAtual = bookingRepository.sumPeopleByRestaurantAndDateTime(restaurantId, booking.getDateTime());
-        if (ocupacaoAtual == null) ocupacaoAtual = 0;
+        Integer currentOccupancy = bookingRepository.sumPeopleByRestaurantAndDateTime(restaurantId, booking.getDateTime());
+        if (currentOccupancy == null) currentOccupancy = 0;
 
-        int vagasRestantes = restaurant.getCapacity() - ocupacaoAtual;
+        int availableSpots = restaurant.getCapacity() - currentOccupancy;
 
-        if (booking.getNumberOfPeople() > vagasRestantes) {
+        if (booking.getNumberOfPeople() > availableSpots) {
             throw new RestaurantOverCapacityException("Capacidade insuficiente! O restaurante possui apenas "
-                    + (vagasRestantes < 0 ? 0 : vagasRestantes) + " vagas disponíveis para este horário.");
+                    + (availableSpots < 0 ? 0 : availableSpots) + " vagas disponíveis para este horário.");
         }
 
         booking.setRestaurant(restaurant);
