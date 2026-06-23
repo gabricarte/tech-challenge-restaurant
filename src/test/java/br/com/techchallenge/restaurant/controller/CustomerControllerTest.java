@@ -3,55 +3,82 @@ package br.com.techchallenge.restaurant.controller;
 import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CustomerControllerTest {
 
+    @Mock
+    private CustomerService customerService;
+
+    @InjectMocks
+    private CustomerController controller;
+
+    private CustomerRequestDTO requestDTO;
+    private CustomerResponseDTO responseDTO;
+
+    @BeforeEach
+    void setUp() {
+        requestDTO = new CustomerRequestDTO("Cliente", "client@test.com", "123", "addr", "999", "cpf", "pass", LocalDate.of(1990, 5, 15));
+        responseDTO = new CustomerResponseDTO(1L, "Cliente", "client@test.com", "addr", LocalDate.of(1990, 5, 15));
+    }
+
     @Test
-    void testSave() {
+    void testSave_Success() {
+        when(customerService.save(any())).thenReturn(responseDTO);
 
-        CustomerService customerService = mock(CustomerService.class);
+        ResponseEntity<CustomerResponseDTO> result = controller.save(requestDTO);
 
-        CustomerController controller =
-                new CustomerController(customerService);
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(result.getBody()).isNotNull();
+        assertThat(result.getBody().id()).isEqualTo(1L);
+        verify(customerService, times(1)).save(any());
+    }
 
-        CustomerRequestDTO request = new CustomerRequestDTO(
-                "Cliente Teste",
-                "cliente@test.com",
-                "123456",
-                "Rua Teste",
-                "11999999999",
-                "12345678900",
-                "password123",
-                LocalDate.of(1990, 5, 15)
+    @Test
+    void testFindAll_Success() {
+        when(customerService.findAll()).thenReturn(List.of(responseDTO));
 
-        );
+        ResponseEntity<List<CustomerResponseDTO>> result = controller.findAll();
 
-        CustomerResponseDTO response = new CustomerResponseDTO(
-                1L,
-                "Cliente Teste",
-                "cliente@test.com",
-                "11999999999",
-                LocalDate.of(1990, 5, 15)
-        );
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody()).hasSize(1);
+    }
 
-        when(customerService.save(request))
-                .thenReturn(response);
+    @Test
+    void testFindById_Success() {
+        when(customerService.findById(1L)).thenReturn(responseDTO);
 
-        ResponseEntity<CustomerResponseDTO> result =
-                controller.save(request);
+        ResponseEntity<CustomerResponseDTO> result = controller.findById(1L);
 
-        assertEquals(HttpStatus.CREATED, result.getStatusCode());
-        assertNotNull(result.getBody());
-        assertEquals(1L, result.getBody().id());
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody()).isNotNull();
+        verify(customerService, times(1)).findById(1L);
+    }
 
-        verify(customerService, times(1)).save(request);
+    @Test
+    void testAtualizar_Success() {
+        when(customerService.atualizarDados(eq(1L), any())).thenReturn(responseDTO);
+
+        ResponseEntity<CustomerResponseDTO> result = controller.atualizar(1L, requestDTO);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody()).isNotNull();
+        verify(customerService, times(1)).atualizarDados(eq(1L), any());
     }
 }

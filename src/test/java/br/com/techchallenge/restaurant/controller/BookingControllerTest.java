@@ -5,55 +5,85 @@ import br.com.techchallenge.restaurant.domain.entity.Booking;
 import br.com.techchallenge.restaurant.mapper.BookingMapper;
 import br.com.techchallenge.restaurant.repository.BookingRepository;
 import br.com.techchallenge.restaurant.service.BookingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class BookingControllerTest {
 
+    @Mock
+    private BookingRepository bookingRepository;
+
+    @Mock
+    private BookingMapper bookingMapper;
+
+    @Mock
+    private BookingService bookingService;
+
+    @InjectMocks
+    private BookingController controller;
+
+    private Booking booking;
+    private BookingResponseDTO responseDTO;
+
+    @BeforeEach
+    void setUp() {
+        booking = new Booking();
+        booking.setId(1L);
+        booking.setDateTime(LocalDateTime.now());
+        booking.setNumberOfPeople(4);
+        booking.setStatus("CONFIRMED");
+        booking.setCustomerName("João");
+
+        responseDTO = new BookingResponseDTO(1L, LocalDateTime.now(), 4, "CONFIRMED", "João", "Restaurante");
+    }
+
     @Test
-    void testFindAll() {
+    void testCreate_Success() {
+        when(bookingService.create(any(), eq(1L))).thenReturn(booking);
+        when(bookingMapper.toDTO(booking)).thenReturn(responseDTO);
 
-        BookingRepository bookingRepository = mock(BookingRepository.class);
-        BookingMapper bookingMapper = mock(BookingMapper.class);
-        BookingService bookingService = mock(BookingService.class);
+        ResponseEntity<BookingResponseDTO> response = controller.create(booking, 1L);
 
-        BookingController controller = new BookingController();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).isNotNull();
+        verify(bookingService, times(1)).create(any(), eq(1L));
+    }
 
-        ReflectionTestUtils.setField(controller, "bookingRepository", bookingRepository);
-        ReflectionTestUtils.setField(controller, "bookingMapper", bookingMapper);
-        ReflectionTestUtils.setField(controller, "bookingService", bookingService);
+    @Test
+    void testFindAll_Success() {
+        when(bookingRepository.findAll()).thenReturn(List.of(booking));
+        when(bookingMapper.toDTO(booking)).thenReturn(responseDTO);
 
-        Booking booking = new Booking();
+        ResponseEntity<List<BookingResponseDTO>> response = controller.findAll();
 
-        BookingResponseDTO dto = new BookingResponseDTO(
-                1L,
-                LocalDateTime.now(),
-                4,
-                "CONFIRMED",
-                "João",
-                "Restaurante Teste"
-        );
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).hasSize(1);
+        assertThat(response.getBody().get(0).id()).isEqualTo(1L);
+        verify(bookingRepository, times(1)).findAll();
+    }
 
-        when(bookingRepository.findAll())
-                .thenReturn(List.of(booking));
+    @Test
+    void testFindAll_Empty() {
+        when(bookingRepository.findAll()).thenReturn(List.of());
 
-        when(bookingMapper.toDTO(booking))
-                .thenReturn(dto);
+        ResponseEntity<List<BookingResponseDTO>> response = controller.findAll();
 
-        ResponseEntity<List<BookingResponseDTO>> response =
-                controller.findAll();
-
-        assertNotNull(response.getBody());
-        assertEquals(1, response.getBody().size());
-        assertEquals(1L, response.getBody().get(0).id());
-
-        verify(bookingRepository).findAll();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEmpty();
     }
 }
