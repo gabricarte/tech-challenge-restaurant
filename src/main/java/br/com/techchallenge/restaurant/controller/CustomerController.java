@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/client")
-@Tag(name = "Client", description = "Endpoints para gestão de Clientes")
+@RequestMapping("/api/v1/customers")
+@Tag(name = "Customers", description = "Endpoints para gestão de Clientes")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -22,25 +22,27 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @Operation(summary = "Salva um cliente")
     @PostMapping
     public ResponseEntity<CustomerResponseDTO> save(@RequestBody CustomerRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(dto));
     }
 
+    @Operation(summary = "Encontra todos os clientes")
     @GetMapping
     public ResponseEntity<List<CustomerResponseDTO>> findAll() {
         return ResponseEntity.ok(customerService.findAll());
     }
 
 
-    @GetMapping("/{id}")
     @Operation(summary = "Busca um cliente pelo ID")
+    @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findById(id));
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "Atualiza os dados de um cliente")
+    @PutMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> atualizar(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
         return ResponseEntity.ok(customerService.atualizarDados(id, dto));
     }
