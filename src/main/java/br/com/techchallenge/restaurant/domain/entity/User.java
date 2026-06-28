@@ -39,4 +39,8 @@ public abstract class User {
 
     @UpdateTimestamp
     private LocalDateTime lastUpdate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_type_id", nullable = false)
+    private UserType userType;
 }

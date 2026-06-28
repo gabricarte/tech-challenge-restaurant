@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,8 @@ public class Restaurant {
     private String address;
     private String cuisineType;
     private Integer capacity;
+    private LocalTime openingTime;
+    private LocalTime closingTime;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
