@@ -16,6 +16,8 @@ public class RestaurantMapper {
                 restaurant.getAddress(),
                 restaurant.getCuisineType(),
                 restaurant.getCapacity(),
+                restaurant.getOpeningTime(),
+                restaurant.getClosingTime(),
                 restaurant.getOwner() != null ? restaurant.getOwner().getName() : "Sem Proprietário"
         );
     }
