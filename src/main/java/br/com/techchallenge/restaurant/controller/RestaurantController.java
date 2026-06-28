@@ -4,6 +4,7 @@ import br.com.techchallenge.restaurant.domain.dto.response.RestaurantResponseDTO
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
 import br.com.techchallenge.restaurant.mapper.RestaurantMapper;
 import br.com.techchallenge.restaurant.service.RestaurantService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class RestaurantController {
     @Autowired
     private RestaurantMapper restaurantMapper;
 
+    @Operation(summary = "Cria um restaurante")
     @PostMapping("/{ownerId}")
     public ResponseEntity<RestaurantResponseDTO> create(
             @RequestBody Restaurant restaurant,
@@ -32,6 +34,7 @@ public class RestaurantController {
                 .body(restaurantMapper.toDTO(createdRestaurant));
     }
 
+    @Operation(summary = "Encontra um restaurante por ID")
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantResponseDTO> findById(
             @PathVariable Long id) {
@@ -44,6 +47,7 @@ public class RestaurantController {
         );
     }
 
+    @Operation(summary = "Encontra todos restaurantes")
     @GetMapping
     public ResponseEntity<List<RestaurantResponseDTO>> findAll() {
 
@@ -55,6 +59,7 @@ public class RestaurantController {
         );
     }
 
+    @Operation(summary = "Atualiza um restaurante")
     @PutMapping("/{id}")
     public ResponseEntity<Restaurant> update(
             @PathVariable Long id,
@@ -65,6 +70,7 @@ public class RestaurantController {
         );
     }
 
+    @Operation(summary = "Deleta um restaurante")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id) {

@@ -22,32 +22,32 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @PostMapping
     @Operation(summary = "Cadastra um novo proprietário")
+    @PostMapping
     public ResponseEntity<OwnerResponseDTO> save(@RequestBody OwnerRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ownerService.save(dto));
     }
 
-    @GetMapping
     @Operation(summary = "Lista todos os proprietários")
+    @GetMapping
     public ResponseEntity<List<OwnerResponseDTO>> findAll() {
         return ResponseEntity.ok(ownerService.findAll());
     }
 
-    @GetMapping("/{id}")
     @Operation(summary = "Busca um proprietário pelo ID")
+    @GetMapping("/{id}")
     public ResponseEntity<OwnerResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(ownerService.findById(id));
     }
 
-    @PutMapping("/{id}")
     @Operation(summary = "Atualiza os dados de um proprietário")
+    @PutMapping("/{id}")
     public ResponseEntity<OwnerResponseDTO> atualizar(@PathVariable Long id, @RequestBody OwnerRequestDTO dto) {
         return ResponseEntity.ok(ownerService.atualizarDados(id, dto));
     }
 
-    @PatchMapping("/{id}/password")
     @Operation(summary = "Altera a senha do proprietário")
+    @PatchMapping("/{id}/password")
     public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
         ownerService.trocarSenha(id, novaSenha);
         return ResponseEntity.noContent().build();

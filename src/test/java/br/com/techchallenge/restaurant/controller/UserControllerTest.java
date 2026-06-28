@@ -93,11 +93,11 @@ class UserControllerTest {
 
     @Test
     void testDeletar_Success() {
-        doNothing().when(userService).deletar(1L);
+        doNothing().when(userService).delete(1L);
 
-        ResponseEntity<Void> response = controller.deletar(1L);
+        ResponseEntity<Void> response = controller.delete(1L);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        verify(userService, times(1)).deletar(1L);
+        verify(userService, times(1)).delete(1L);
     }
 }
