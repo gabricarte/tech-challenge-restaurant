@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.BookingResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.BookingResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Booking;
 import br.com.techchallenge.restaurant.mapper.BookingMapper;
 import br.com.techchallenge.restaurant.repository.BookingRepository;

@@ -1,93 +1,74 @@
 package br.com.techchallenge.restaurant.service;
 
-import br.com.techchallenge.restaurant.domain.dto.*;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
-import br.com.techchallenge.restaurant.exception.InvalidLoginException;
-import br.com.techchallenge.restaurant.exception.UserNotFoundException;
-import br.com.techchallenge.restaurant.mapper.OwnerMapper;
+import br.com.techchallenge.restaurant.domain.dto.request.OwnerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.OwnerResponseDTO;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class OwnerService {
 
-    private final UserService userService;
     private final OwnerRepository ownerRepository;
-    private final OwnerMapper ownerMapper;
+
+    public OwnerService(OwnerRepository ownerRepository) {
+        this.ownerRepository = ownerRepository;
+    }
 
     @Transactional
     public OwnerResponseDTO save(OwnerRequestDTO dto) {
-        userService.verifyEmailAlreadyExists(dto.email());
-
         Owner owner = new Owner();
         updateEntityFromDTO(owner, dto);
 
         Owner savedOwner = ownerRepository.save(owner);
-        return ownerMapper.toResponseDTO(savedOwner);
+        return toResponseDTO(savedOwner);
     }
 
     public List<OwnerResponseDTO> findAll() {
         return ownerRepository.findAll().stream()
-                .map(ownerMapper::toResponseDTO)
+                .map(this::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     public OwnerResponseDTO findById(Long id) {
         Owner owner = ownerRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-        return ownerMapper.toResponseDTO(owner);
-    }
-
-    public List<OwnerResponseDTO> findByName(String name) {
-        List<Owner> owners = ownerRepository.findByNameContainingIgnoreCase(name);
-
-        if (owners.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-
-        return owners.stream()
-                .map(ownerMapper::toResponseDTO)
-                .collect(Collectors.toList());
+                .orElseThrow(() -> new OwnerNotFoundException(id));
+        return toResponseDTO(owner);
     }
 
     @Transactional
-    public OwnerResponseDTO update(Long id, OwnerUpdateRequestDTO dto) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    public OwnerResponseDTO atualizarDados(Long id, OwnerRequestDTO dto) {
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new OwnerNotFoundException(id));
 
         owner.setName(dto.name());
         owner.setEmail(dto.email());
         owner.setAddress(dto.address());
 
-        return ownerMapper.toResponseDTO(ownerRepository.save(owner));
+        return toResponseDTO(ownerRepository.save(owner));
     }
 
     @Transactional
-    public void updatePassword(Long id, PasswordUpdateDTO passwordUpdateDTO) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    public void trocarSenha(Long id, String novaSenha) {
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new OwnerNotFoundException(id));
 
-        owner.setPassword(passwordUpdateDTO.newPassword());
-
+        owner.setPassword(novaSenha);
         ownerRepository.save(owner);
     }
 
-    public void delete(Long id) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        ownerRepository.delete(owner);
-    }
-
-    public OwnerResponseDTO login(UserLoginDTO userLoginDTO) {
-        Owner owner = ownerRepository.findByLogin(userLoginDTO.login()).orElseThrow(InvalidLoginException::new);
-
-        if (!owner.getPassword().equals(userLoginDTO.password())) {
-            throw new InvalidLoginException();
-        }
-
-        return ownerMapper.toResponseDTO(owner);
+    private OwnerResponseDTO toResponseDTO(Owner owner) {
+        return new OwnerResponseDTO(
+                owner.getId(),
+                owner.getName(),
+                owner.getEmail(),
+                owner.getAddress(),
+                owner.getLastUpdate()
+        );
     }
 
     private void updateEntityFromDTO(Owner owner, OwnerRequestDTO dto) {

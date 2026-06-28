@@ -5,27 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tb_restaurant")
+@Table(name = "tb_menu_item")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Restaurant {
+public class MenuItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String address;
-    private String cuisineType;
-    private Integer capacity;
-    private LocalTime openingTime;
-    private LocalTime closingTime;
+
+    private String description;
+
+    private BigDecimal price;
+
+    private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

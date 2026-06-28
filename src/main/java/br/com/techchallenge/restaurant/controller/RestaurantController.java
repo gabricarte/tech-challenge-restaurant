@@ -1,55 +1,76 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.RestaurantResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.RestaurantResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
+import br.com.techchallenge.restaurant.mapper.RestaurantMapper;
 import br.com.techchallenge.restaurant.service.RestaurantService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
-@RequiredArgsConstructor
-@Tag(name = "Restaurantes", description = "Endpoints para gestão de restaurantes")
 public class RestaurantController {
 
-    private final RestaurantService restaurantService;
+    @Autowired
+    private RestaurantService restaurantService;
 
-    @Operation(summary = "Cadastra um novo restaurante")
+    @Autowired
+    private RestaurantMapper restaurantMapper;
+
     @PostMapping("/{ownerId}")
-    public ResponseEntity<RestaurantResponseDTO> save(@RequestBody Restaurant restaurant, @PathVariable Long ownerId) {
-        RestaurantResponseDTO newRestaurant = restaurantService.save(restaurant, ownerId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newRestaurant);
+    public ResponseEntity<RestaurantResponseDTO> create(
+            @RequestBody Restaurant restaurant,
+            @PathVariable Long ownerId) {
+
+        Restaurant createdRestaurant =
+                restaurantService.create(restaurant, ownerId);
+
+        return ResponseEntity.status(201)
+                .body(restaurantMapper.toDTO(createdRestaurant));
     }
 
-    @Operation(summary = "Busca um restaurante por ID")
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantResponseDTO> findById(@PathVariable Long id) {
-        RestaurantResponseDTO restaurant = restaurantService.findById(id);
-        return ResponseEntity.ok(restaurant);
+    public ResponseEntity<RestaurantResponseDTO> findById(
+            @PathVariable Long id) {
+
+        Restaurant restaurant =
+                restaurantService.findById(id);
+
+        return ResponseEntity.ok(
+                restaurantMapper.toDTO(restaurant)
+        );
     }
 
-    @Operation(summary = "Lista todos os restaurantes")
     @GetMapping
-    public ResponseEntity<List<RestaurantResponseDTO>> listAll() {
-        List<RestaurantResponseDTO> allRestaurants = restaurantService.listAll();
-        return ResponseEntity.ok(allRestaurants);
+    public ResponseEntity<List<RestaurantResponseDTO>> findAll() {
+
+        List<Restaurant> restaurants =
+                restaurantService.findAll();
+
+        return ResponseEntity.ok(
+                restaurantMapper.toDTOList(restaurants)
+        );
     }
 
-    @Operation(summary = "Atualiza restaurante por ID")
     @PutMapping("/{id}")
-    public ResponseEntity<RestaurantResponseDTO> update(@PathVariable Long id, @RequestBody Restaurant restaurant) {
-        return ResponseEntity.ok(restaurantService.update(id, restaurant));
+    public ResponseEntity<Restaurant> update(
+            @PathVariable Long id,
+            @RequestBody Restaurant restaurant) {
+
+        return ResponseEntity.ok(
+                restaurantService.update(id, restaurant)
+        );
     }
 
-    @Operation(summary = "Deleta restaurante por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id) {
+
         restaurantService.delete(id);
+
         return ResponseEntity.noContent().build();
     }
 }

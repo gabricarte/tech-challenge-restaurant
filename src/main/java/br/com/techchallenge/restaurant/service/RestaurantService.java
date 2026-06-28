@@ -1,63 +1,64 @@
 package br.com.techchallenge.restaurant.service;
 
-import br.com.techchallenge.restaurant.domain.dto.RestaurantResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.Restaurant;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.RestaurantNotFoundException;
-import br.com.techchallenge.restaurant.exception.UserNotFoundException;
-import br.com.techchallenge.restaurant.mapper.RestaurantMapper;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.RestaurantRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class RestaurantService {
 
-    private final RestaurantRepository restaurantRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
-    private final OwnerRepository ownerRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
-    private final RestaurantMapper restaurantMapper;
+    public Restaurant create(Restaurant restaurant, Long ownerId) {
 
-    public RestaurantResponseDTO save(Restaurant restaurant, Long ownerId) {
         Owner owner = ownerRepository.findById(ownerId)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new OwnerNotFoundException(ownerId));
 
         restaurant.setOwner(owner);
-        return restaurantMapper.toDTO(restaurantRepository.save(restaurant));
+
+        return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant findEntityById(Long id) {
-        return restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
+    public Restaurant findById(Long id) {
+
+        return restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 
-    public RestaurantResponseDTO findById(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
+    public List<Restaurant> findAll() {
 
-        return restaurantMapper.toDTO(restaurant);
+        return restaurantRepository.findAll();
     }
 
-    public List<RestaurantResponseDTO> listAll() {
-        return restaurantRepository.findAll().stream().map(restaurantMapper::toDTO).toList();
-    }
+    public Restaurant update(Long id, Restaurant updatedRestaurant) {
 
-    public RestaurantResponseDTO update(Long id, Restaurant updatedRestaurant) {
-        Restaurant existingRestaurant = findEntityById(id);
+        Restaurant existingRestaurant = findById(id);
 
         existingRestaurant.setName(updatedRestaurant.getName());
         existingRestaurant.setAddress(updatedRestaurant.getAddress());
         existingRestaurant.setCuisineType(updatedRestaurant.getCuisineType());
         existingRestaurant.setCapacity(updatedRestaurant.getCapacity());
+        existingRestaurant.setOpeningTime(updatedRestaurant.getOpeningTime());
+        existingRestaurant.setClosingTime(updatedRestaurant.getClosingTime());
 
-        return restaurantMapper.toDTO(restaurantRepository.save(existingRestaurant));
+        return restaurantRepository.save(existingRestaurant);
     }
 
     public void delete(Long id) {
-        Restaurant restaurant = findEntityById(id);
+
+        Restaurant restaurant = findById(id);
+
         restaurantRepository.delete(restaurant);
     }
 }

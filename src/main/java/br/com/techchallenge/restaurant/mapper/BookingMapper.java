@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.mapper;
 
-import br.com.techchallenge.restaurant.domain.dto.BookingResponseDTO;
+import br.com.techchallenge.restaurant.domain.dto.response.BookingResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Booking;
 import org.springframework.stereotype.Component;
 
