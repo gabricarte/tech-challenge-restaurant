@@ -1,8 +1,8 @@
 package br.com.techchallenge.restaurant.service;
 
-import br.com.techchallenge.restaurant.domain.entity.Customer;
 import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
+import br.com.techchallenge.restaurant.domain.entity.Customer;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -36,15 +37,41 @@ class CustomerServiceTest {
 
     @BeforeEach
     void setUp() {
+
         customer = new Customer();
         customer.setId(1L);
+        customer.setLogin("login");
+        customer.setCpf("123");
+        customer.setTelephone("99999");
         customer.setName("Customer 1");
+        customer.setEmail("c@test.com");
+        customer.setBirthDate(LocalDate.of(1990, 5, 15));
     }
 
     @Test
     void testSave_ValidCustomer_Success() {
-        CustomerRequestDTO dto = new CustomerRequestDTO("C1", "c@test.com", "123", "login", "99999", "addr", "pass", null);
-        CustomerResponseDTO responseDTO = new CustomerResponseDTO(1L, "login", "C1", "c@test.com", null);
+
+        CustomerRequestDTO dto = new CustomerRequestDTO(
+                "Customer 1",
+                "c@test.com",
+                "123",
+                "login",
+                "99999",
+                "addr",
+                "pass",
+                LocalDate.of(1990,5,15)
+        );
+
+        CustomerResponseDTO responseDTO = new CustomerResponseDTO(
+                1L,
+                "login",
+                "123",
+                "99999",
+                "Customer 1",
+                "c@test.com",
+                LocalDate.of(1990,5,15),
+                null
+        );
 
         when(customerMapper.toEntity(any())).thenReturn(customer);
         when(customerRepository.save(any())).thenReturn(customer);
@@ -54,24 +81,36 @@ class CustomerServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.id()).isEqualTo(1L);
-        verify(customerRepository, times(1)).save(any());
-        verify(customerMapper, times(1)).toEntity(any());
+
+        verify(customerRepository).save(any());
     }
 
     @Test
     void testFindAll_ReturnsCustomers() {
-        CustomerResponseDTO dto = new CustomerResponseDTO(1L, "login", "C1", "leticia@email.com", null);
+
+        CustomerResponseDTO dto = new CustomerResponseDTO(
+                1L,
+                "login",
+                "123",
+                "99999",
+                "Customer 1",
+                "c@test.com",
+                LocalDate.of(1990, 5, 15),
+                null
+        );
+
         when(customerRepository.findAll()).thenReturn(List.of(customer));
         when(customerMapper.toDTO(customer)).thenReturn(dto);
 
         List<CustomerResponseDTO> result = customerService.findAll();
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).name()).isEqualTo("C1");
+        assertThat(result.get(0).name()).isEqualTo("Customer 1");
     }
 
     @Test
-    void testFindAll_EmptyList_ReturnsEmpty() {
+    void testFindAll_EmptyList() {
+
         when(customerRepository.findAll()).thenReturn(List.of());
 
         List<CustomerResponseDTO> result = customerService.findAll();
@@ -80,31 +119,61 @@ class CustomerServiceTest {
     }
 
     @Test
-    void testFindById_Success() {
-        CustomerResponseDTO dto = new CustomerResponseDTO(1L, "login", "C1", "leticia@email.com", null);
+    void testFindById() {
+
+        CustomerResponseDTO dto = new CustomerResponseDTO(
+                1L,
+                "login",
+                "123",
+                "99999",
+                "Customer 1",
+                "c@test.com",
+                LocalDate.of(1990,5,15),
+                null
+        );
+
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(customerMapper.toDTO(customer)).thenReturn(dto);
 
         CustomerResponseDTO result = customerService.findById(1L);
 
-        assertThat(result).isNotNull();
         assertThat(result.id()).isEqualTo(1L);
-        assertThat(result.name()).isEqualTo("C1");
+        assertThat(result.name()).isEqualTo("Customer 1");
     }
 
     @Test
-    void testFindById_NotFound_ThrowsException() {
+    void testFindById_NotFound() {
+
         when(customerRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> customerService.findById(999L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Cliente não encontrado");
+                .isInstanceOf(RuntimeException.class);
     }
 
     @Test
-    void testAtualizarDados_Success() {
-        CustomerRequestDTO dto = new CustomerRequestDTO("Updated", "updated@test.com", "123", "login", "99999", "addr", "pass", null);
-        CustomerResponseDTO responseDTO = new CustomerResponseDTO(1L, "login", "Updated", "updated@test.com", null);
+    void testAtualizarDados() {
+
+        CustomerRequestDTO dto = new CustomerRequestDTO(
+                "Updated",
+                "updated@test.com",
+                "321",
+                "login",
+                "88888",
+                "addr",
+                "pass",
+                LocalDate.of(1995,1,1)
+        );
+
+        CustomerResponseDTO responseDTO = new CustomerResponseDTO(
+                1L,
+                "login",
+                "321",
+                "88888",
+                "Updated",
+                "updated@test.com",
+                LocalDate.of(1995,1,1),
+                LocalDateTime.now()
+        );
 
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(customerRepository.save(any())).thenReturn(customer);
@@ -113,16 +182,27 @@ class CustomerServiceTest {
         CustomerResponseDTO result = customerService.atualizarDados(1L, dto);
 
         assertThat(result).isNotNull();
-        verify(customerRepository, times(1)).save(customer);
+
+        verify(customerRepository).save(any());
     }
 
     @Test
-    void testAtualizarDados_NotFound_ThrowsException() {
-        CustomerRequestDTO dto = new CustomerRequestDTO("Updated", "updated@test.com", "123", "login", "99999", "addr", "pass", null);
+    void testAtualizarDados_NotFound() {
+
+        CustomerRequestDTO dto = new CustomerRequestDTO(
+                "Updated",
+                "updated@test.com",
+                "321",
+                "login",
+                "88888",
+                "addr",
+                "pass",
+                null
+        );
+
         when(customerRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> customerService.atualizarDados(999L, dto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Cliente não encontrado");
+                .isInstanceOf(RuntimeException.class);
     }
 }

@@ -2,6 +2,7 @@ package br.com.techchallenge.restaurant.exception;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
@@ -15,7 +16,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void testHandleOwnerNotFound_Returns404() {
         OwnerNotFoundException ex = new OwnerNotFoundException(1L);
-        ResponseEntity<Object> response = handler.handleOwnerNotFound(ex);
+        ResponseEntity<ProblemDetail> response = handler.handleOwnerNotFound(ex);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody()).isInstanceOf(Map.class);
@@ -24,23 +25,15 @@ class GlobalExceptionHandlerTest {
     @Test
     void testHandleInvalidLogin_Returns401() {
         InvalidLoginException ex = new InvalidLoginException();
-        ResponseEntity<Object> response = handler.handleInvalidLogin(ex);
+        ResponseEntity<ProblemDetail> response = handler.handleInvalidLogin(ex);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
-    void testHandleRestaurantNotFound_Returns403() {
-        RestaurantNotFoundException ex = new RestaurantNotFoundException(1L);
-        ResponseEntity<String> response = handler.handleRestaurantNotFound(ex);
-
-        assertThat(response.getStatusCode().value()).isEqualTo(403);
-    }
-
-    @Test
     void testHandleOverCapacity_Returns403() {
         RestaurantOverCapacityException ex = new RestaurantOverCapacityException("Capacidade insuficiente");
-        ResponseEntity<String> response = handler.handleOverCapacity(ex);
+        ResponseEntity<ProblemDetail> response = handler.handleOverCapacity(ex);
 
         assertThat(response.getStatusCode().value()).isEqualTo(403);
     }

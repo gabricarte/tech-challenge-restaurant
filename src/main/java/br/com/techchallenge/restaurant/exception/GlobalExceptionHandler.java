@@ -85,4 +85,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(status).body(problemDetail);
     }
+
+
+    @ExceptionHandler(OwnerNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleOwnerNotFound(OwnerNotFoundException ex) {
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problem);
+    }
+
+    @ExceptionHandler(RestaurantOverCapacityException.class)
+    public ResponseEntity<ProblemDetail> handleOverCapacity(RestaurantOverCapacityException ex) {
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.FORBIDDEN,
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+    }
 }

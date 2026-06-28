@@ -49,7 +49,7 @@ class BookingServiceTest {
         when(bookingRepository.sumPeopleByRestaurantAndDateTime(eq(1L), any())).thenReturn(0);
         when(bookingRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Booking result = bookingService.create(booking, 1L);
+        Booking result = bookingService.createBooking(booking, 1L);
 
         assertThat(result).isNotNull();
         assertThat(result.getStatus()).isEqualTo("CONFIRMED");
@@ -67,7 +67,7 @@ class BookingServiceTest {
         when(restaurantService.findById(1L)).thenReturn(restaurant);
         when(bookingRepository.sumPeopleByRestaurantAndDateTime(eq(1L), any())).thenReturn(8);
 
-        assertThatThrownBy(() -> bookingService.create(booking, 1L))
+        assertThatThrownBy(() -> bookingService.createBooking(booking, 1L))
                 .isInstanceOf(RestaurantOverCapacityException.class)
                 .hasMessageContaining("insuficiente");
 
@@ -84,7 +84,7 @@ class BookingServiceTest {
         when(bookingRepository.sumPeopleByRestaurantAndDateTime(eq(1L), any())).thenReturn(null);
         when(bookingRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Booking result = bookingService.create(booking, 1L);
+        Booking result = bookingService.createBooking(booking, 1L);
 
         assertThat(result).isNotNull();
         assertThat(result.getStatus()).isEqualTo("CONFIRMED");
@@ -102,7 +102,7 @@ class BookingServiceTest {
         when(bookingRepository.sumPeopleByRestaurantAndDateTime(eq(1L), any())).thenReturn(0);
         when(bookingRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Booking result = bookingService.create(booking, 1L);
+        Booking result = bookingService.createBooking(booking, 1L);
 
         assertThat(result.getStatus()).isEqualTo("CONFIRMED");
         verify(bookingRepository, times(1)).save(any());
@@ -116,7 +116,7 @@ class BookingServiceTest {
 
         when(restaurantService.findById(999L)).thenThrow(new RuntimeException("Restaurant not found"));
 
-        assertThatThrownBy(() -> bookingService.create(booking, 999L))
+        assertThatThrownBy(() -> bookingService.createBooking(booking, 999L))
                 .isInstanceOf(RuntimeException.class);
 
         verify(bookingRepository, never()).save(any());

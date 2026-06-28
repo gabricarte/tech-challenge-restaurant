@@ -54,14 +54,14 @@ class BookingControllerTest {
 
     @Test
     void testCreate_Success() {
-        when(bookingService.create(any(), eq(1L))).thenReturn(booking);
+        when(bookingService.createBooking(any(), eq(1L))).thenReturn(booking);
         when(bookingMapper.toDTO(booking)).thenReturn(responseDTO);
 
-        ResponseEntity<BookingResponseDTO> response = controller.create(booking, 1L);
+        ResponseEntity<BookingResponseDTO> response = controller.createBooking(booking, 1L);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
-        verify(bookingService, times(1)).create(any(), eq(1L));
+        verify(bookingService, times(1)).createBooking(any(), eq(1L));
     }
 
     @Test
@@ -69,7 +69,7 @@ class BookingControllerTest {
         when(bookingRepository.findAll()).thenReturn(List.of(booking));
         when(bookingMapper.toDTO(booking)).thenReturn(responseDTO);
 
-        ResponseEntity<List<BookingResponseDTO>> response = controller.findAll();
+        ResponseEntity<List<BookingResponseDTO>> response = controller.listAll();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).hasSize(1);
@@ -81,7 +81,7 @@ class BookingControllerTest {
     void testFindAll_Empty() {
         when(bookingRepository.findAll()).thenReturn(List.of());
 
-        ResponseEntity<List<BookingResponseDTO>> response = controller.findAll();
+        ResponseEntity<List<BookingResponseDTO>> response = controller.listAll();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEmpty();

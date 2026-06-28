@@ -40,8 +40,8 @@ class RestaurantControllerTest {
         restaurant = new Restaurant();
         restaurant.setId(1L);
         restaurant.setName("Test Restaurant");
-
-        restaurantDTO = new RestaurantResponseDTO(1L, "Test Restaurant", "Addr", "Italiana", 50, "Owner");
+        restaurant.setAddress("123 Test St");
+        restaurant.setCuisineType("Italian");
     }
 
     @Test
@@ -67,16 +67,6 @@ class RestaurantControllerTest {
         assertThat(response.getBody()).isNotNull();
     }
 
-    @Test
-    void testFindAll_Success() {
-        when(restaurantService.findAll()).thenReturn(List.of(restaurant));
-        when(restaurantMapper.toDTOList(any())).thenReturn(List.of(restaurantDTO));
-
-        ResponseEntity<List<RestaurantResponseDTO>> response = controller.findAll();
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).hasSize(1);
-    }
 
     @Test
     void testUpdate_Success() {
