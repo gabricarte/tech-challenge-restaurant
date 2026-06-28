@@ -5,6 +5,7 @@ import br.com.techchallenge.restaurant.domain.dto.response.UserResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.User;
 import br.com.techchallenge.restaurant.exception.InvalidLoginException;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserNotFoundException;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
@@ -36,7 +37,7 @@ public class UserService {
     public UserResponseDTO atualizarDados(Long id, UserRequestDTO dto) {
 
         Owner ownerExistente = ownerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new OwnerNotFoundException(id));
 
 
         ownerExistente.setName(dto.name());
@@ -49,7 +50,7 @@ public class UserService {
 
     public void trocarSenha(Long id, String novaSenha) {
         Owner owner = ownerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new OwnerNotFoundException(id));
 
         owner.setPassword(novaSenha);
 
@@ -58,12 +59,12 @@ public class UserService {
 
     public Owner buscarPorId(Long id) {
         return ownerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new OwnerNotFoundException(id));
     }
 
     public void deletar(Long id) {
         Owner owner = ownerRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new OwnerNotFoundException(id));
         ownerRepository.delete(owner);
     }
 }

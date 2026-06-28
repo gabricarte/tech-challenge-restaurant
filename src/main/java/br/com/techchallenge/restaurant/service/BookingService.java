@@ -15,7 +15,7 @@ public class BookingService {
     private final RestaurantService restaurantService;
 
     public Booking createBooking(Booking booking, Long restaurantId) {
-        Restaurant restaurant = restaurantService.findEntityById(restaurantId);
+        Restaurant restaurant = restaurantService.findById(restaurantId);
 
         Integer currentOccupation = bookingRepository.sumPeopleByRestaurantAndDateTime(restaurantId, booking.getDateTime());
 
