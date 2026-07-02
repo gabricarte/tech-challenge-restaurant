@@ -5,6 +5,7 @@ import br.com.techchallenge.restaurant.domain.entity.Restaurant;
 import br.com.techchallenge.restaurant.mapper.RestaurantMapper;
 import br.com.techchallenge.restaurant.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
+@Tag(name = "Restaurante", description = "Endpoints para gestão de restaurantes")
 public class RestaurantController {
 
     @Autowired

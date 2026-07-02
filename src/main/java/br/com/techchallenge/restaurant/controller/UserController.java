@@ -5,6 +5,8 @@ import br.com.techchallenge.restaurant.domain.dto.request.UserRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.UserResponseDTO;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@Tag(name = "Usuários", description = "Endpoints para gestão de usuários")
 public class UserController {
 
     @Autowired
@@ -21,6 +24,7 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @Operation(summary = "Realiza login de um usuário")
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody Map<String, String> body) {
         String login = body.get("login");
@@ -31,6 +35,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Encontra usuário por ID")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
@@ -38,6 +43,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Atualiza dados de usuário")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody UserRequestDTO dto) {
         return ResponseEntity.ok(
@@ -45,6 +51,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Altera senha de usuário")
     @PatchMapping("/{id}/password")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody Map<String, String> body) {
         String newPassword = body.get("newPassword");
@@ -52,6 +59,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Deleta um usuário")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);

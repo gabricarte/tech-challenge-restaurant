@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Reservas", description = "Endpoints para gestão de reservas")
 @RequestMapping("/api/v1/bookings")
+@Tag(name = "Reservas", description = "Endpoints para gestão de reservas")
 public class BookingController {
     private final BookingService bookingService;
 
