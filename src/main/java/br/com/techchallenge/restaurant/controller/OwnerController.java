@@ -42,14 +42,14 @@ public class OwnerController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza os dados de um proprietário")
-    public ResponseEntity<OwnerResponseDTO> atualizar(@PathVariable Long id, @RequestBody OwnerRequestDTO dto) {
-        return ResponseEntity.ok(ownerService.atualizarDados(id, dto));
+    public ResponseEntity<OwnerResponseDTO> update(@PathVariable Long id, @RequestBody OwnerRequestDTO dto) {
+        return ResponseEntity.ok(ownerService.updateData(id, dto));
     }
 
     @PatchMapping("/{id}/password")
     @Operation(summary = "Altera a senha do proprietário")
-    public ResponseEntity<Void> trocarSenha(@PathVariable Long id, @RequestBody String novaSenha) {
-        ownerService.trocarSenha(id, novaSenha);
+    public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody String newPassword) {
+        ownerService.changePassword(id, newPassword);
         return ResponseEntity.noContent().build();
     }
 }

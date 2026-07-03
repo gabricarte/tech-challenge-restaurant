@@ -35,8 +35,19 @@ class CustomerControllerTest {
 
     @BeforeEach
     void setUp() {
-        requestDTO = new CustomerRequestDTO("Cliente", "client@test.com", "123", "addr", "999", "cpf", "pass", LocalDate.of(1990, 5, 15));
-        CustomerResponseDTO responseDTO = new CustomerResponseDTO(
+
+        requestDTO = new CustomerRequestDTO(
+                "Cliente",
+                "client@test.com",
+                "123",
+                "addr",
+                "999",
+                "cpf",
+                "pass",
+                LocalDate.of(1990, 5, 15)
+        );
+
+        responseDTO = new CustomerResponseDTO(
                 1L,
                 "client123",
                 "12345678900",
@@ -53,8 +64,7 @@ class CustomerControllerTest {
 
             ResponseEntity<CustomerResponseDTO> result = controller.save(requestDTO);
 
-            assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-            assertThat(result.getBody()).isNotNull();
+            assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED);assertThat(result.getBody()).isNotNull();
             assertThat(result.getBody().id()).isEqualTo(1L);
             verify(customerService, times(1)).save(any());
         }

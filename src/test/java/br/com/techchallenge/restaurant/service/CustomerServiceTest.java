@@ -179,7 +179,7 @@ class CustomerServiceTest {
         when(customerRepository.save(any())).thenReturn(customer);
         when(customerMapper.toDTO(customer)).thenReturn(responseDTO);
 
-        CustomerResponseDTO result = customerService.atualizarDados(1L, dto);
+        CustomerResponseDTO result = customerService.updateData(1L, dto);
 
         assertThat(result).isNotNull();
 
@@ -202,7 +202,7 @@ class CustomerServiceTest {
 
         when(customerRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> customerService.atualizarDados(999L, dto))
+        assertThatThrownBy(() -> customerService.updateData(999L, dto))
                 .isInstanceOf(RuntimeException.class);
     }
 }

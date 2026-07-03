@@ -41,7 +41,7 @@ public class OwnerService {
     }
 
     @Transactional
-    public OwnerResponseDTO atualizarDados(Long id, OwnerRequestDTO dto) {
+    public OwnerResponseDTO updateData(Long id, OwnerRequestDTO dto) {
         Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new OwnerNotFoundException(id));
 
@@ -53,7 +53,7 @@ public class OwnerService {
     }
 
     @Transactional
-    public void trocarSenha(Long id, String novaSenha) {
+    public void changePassword(Long id, String novaSenha) {
         Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new OwnerNotFoundException(id));
 

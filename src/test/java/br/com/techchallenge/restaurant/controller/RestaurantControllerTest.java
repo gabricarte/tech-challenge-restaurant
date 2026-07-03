@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +43,17 @@ class RestaurantControllerTest {
         restaurant.setName("Test Restaurant");
         restaurant.setAddress("123 Test St");
         restaurant.setCuisineType("Italian");
+
+        restaurantDTO = new RestaurantResponseDTO(
+                1L,
+                "Test Restaurant",
+                "123 Test St",
+                "Italian",
+                100,
+                LocalTime.of(11, 0),
+                LocalTime.of(23, 0),
+                "Owner Test"
+        );
     }
 
     @Test
@@ -51,8 +63,7 @@ class RestaurantControllerTest {
 
         ResponseEntity<RestaurantResponseDTO> response = controller.create(restaurant, 1L);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);assertThat(response.getBody()).isNotNull();
         verify(restaurantService, times(1)).create(any(), eq(1L));
     }
 
@@ -63,8 +74,7 @@ class RestaurantControllerTest {
 
         ResponseEntity<RestaurantResponseDTO> response = controller.findById(1L);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);assertThat(response.getBody()).isNotNull();
     }
 
 

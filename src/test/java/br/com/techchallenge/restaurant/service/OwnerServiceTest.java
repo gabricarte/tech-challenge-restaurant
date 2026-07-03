@@ -100,7 +100,7 @@ class OwnerServiceTest {
         );
         when(ownerRepository.findById(1L)).thenReturn(Optional.of(owner));
         when(ownerRepository.save(any())).thenReturn(owner);
-        OwnerResponseDTO result = ownerService.atualizarDados(1L, dto);
+        OwnerResponseDTO result = ownerService.updateData(1L, dto);
 
         assertThat(result).isNotNull();
         verify(ownerRepository, times(1)).save(owner);
@@ -116,7 +116,7 @@ class OwnerServiceTest {
                 "addr",
                 LocalDateTime.now()
         );
-        assertThatThrownBy(() -> ownerService.atualizarDados(999L, dto))
+        assertThatThrownBy(() -> ownerService.updateData(999L, dto))
                 .isInstanceOf(OwnerNotFoundException.class);
     }
 
@@ -125,7 +125,7 @@ class OwnerServiceTest {
         when(ownerRepository.findById(1L)).thenReturn(Optional.of(owner));
         when(ownerRepository.save(any())).thenReturn(owner);
 
-        ownerService.trocarSenha(1L, "newpass");
+        ownerService.changePassword(1L, "newpass");
 
         verify(ownerRepository, times(1)).save(owner);
     }
@@ -134,7 +134,7 @@ class OwnerServiceTest {
     void testTrocarSenha_NotFound_ThrowsException() {
         when(ownerRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> ownerService.trocarSenha(999L, "newpass"))
+        assertThatThrownBy(() -> ownerService.changePassword(999L, "newpass"))
                 .isInstanceOf(OwnerNotFoundException.class);
     }
 }

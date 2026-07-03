@@ -29,6 +29,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<CustomerResponseDTO>> findAll() {
+
         return ResponseEntity.ok(customerService.findAll());
     }
 
@@ -41,7 +42,7 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza os dados de um cliente")
-    public ResponseEntity<CustomerResponseDTO> atualizar(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
-        return ResponseEntity.ok(customerService.atualizarDados(id, dto));
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
+        return ResponseEntity.ok(customerService.updateData(id, dto));
     }
 }

@@ -39,7 +39,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerResponseDTO atualizarDados(Long id, CustomerRequestDTO dto) {
+    public CustomerResponseDTO updateData(Long id, CustomerRequestDTO dto) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 

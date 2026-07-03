@@ -4,6 +4,7 @@ import br.com.techchallenge.restaurant.domain.dto.request.UserRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.UserResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.exception.InvalidLoginException;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserNotFoundException;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
@@ -111,7 +112,7 @@ class UserServiceTest {
         when(ownerRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userService.atualizarDados(999L, dto))
-                .isInstanceOf(UserNotFoundException.class);
+                .isInstanceOf(OwnerNotFoundException.class);
     }
 
     @Test
@@ -129,7 +130,7 @@ class UserServiceTest {
         when(ownerRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userService.trocarSenha(999L, "newpass"))
-                .isInstanceOf(UserNotFoundException.class);
+                .isInstanceOf(OwnerNotFoundException.class);
     }
 
     @Test
@@ -146,7 +147,7 @@ class UserServiceTest {
         when(ownerRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userService.buscarPorId(999L))
-                .isInstanceOf(UserNotFoundException.class);
+                .isInstanceOf(OwnerNotFoundException.class);
     }
 
     @Test

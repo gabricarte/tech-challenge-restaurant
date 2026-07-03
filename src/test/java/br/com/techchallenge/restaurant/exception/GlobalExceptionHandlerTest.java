@@ -15,11 +15,16 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void testHandleOwnerNotFound_Returns404() {
+
         OwnerNotFoundException ex = new OwnerNotFoundException(1L);
-        ResponseEntity<ProblemDetail> response = handler.handleOwnerNotFound(ex);
+
+        ResponseEntity<ProblemDetail> response =
+                handler.handleOwnerNotFound(ex);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(response.getBody()).isInstanceOf(Map.class);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getDetail())
+                .isEqualTo("Proprietário com ID 1 não encontrado. Verifique as credenciais.");
     }
 
     @Test

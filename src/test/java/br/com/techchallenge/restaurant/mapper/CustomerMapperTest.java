@@ -19,21 +19,21 @@ class CustomerMapperTest {
         Customer customer = new Customer();
         customer.setId(1L);
         customer.setLogin("johndoe");
+        customer.setCpf("12345678900");
+        customer.setTelephone("11999999999");
         customer.setName("John Doe");
         customer.setEmail("john@test.com");
-        customer.setCpf("12345678900");
         customer.setBirthDate(LocalDate.of(1990, 5, 15));
 
         CustomerResponseDTO dto = mapper.toDTO(customer);
 
         assertThat(dto.id()).isEqualTo(1L);
-
-        assertThat(dto.login()).isEqualTo("John Doe");
-        assertThat(dto.name()).isEqualTo("john@test.com");
-        assertThat(dto.email()).isEqualTo("12345678900");
-
-        assertThat(dto.birthDate())
-                .isEqualTo(LocalDate.of(1990, 5, 15));
+        assertThat(dto.login()).isEqualTo("johndoe");
+        assertThat(dto.cpf()).isEqualTo("12345678900");
+        assertThat(dto.telephone()).isEqualTo("11999999999");
+        assertThat(dto.name()).isEqualTo("John Doe");
+        assertThat(dto.email()).isEqualTo("john@test.com");
+        assertThat(dto.birthDate()).isEqualTo(LocalDate.of(1990, 5, 15));
     }
 
     @Test

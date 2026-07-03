@@ -72,23 +72,25 @@ class OwnerControllerTest {
     }
 
     @Test
-    void testAtualizar_Success() {
-        when(ownerService.atualizarDados(eq(1L), any())).thenReturn(responseDTO);
+    void testUpdate_Success() {
 
-        ResponseEntity<OwnerResponseDTO> result = controller.atualizar(1L, requestDTO);
+        when(ownerService.updateData(eq(1L), any())).thenReturn(responseDTO);
+
+        ResponseEntity<OwnerResponseDTO> result = controller.update(1L, requestDTO);
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isNotNull();
-        verify(ownerService, times(1)).atualizarDados(eq(1L), any());
+
+        verify(ownerService).updateData(1L, requestDTO);
     }
 
     @Test
-    void testTrocarSenha_Success() {
-        doNothing().when(ownerService).trocarSenha(1L, "newPass");
+    void testChangePassword_Success() {
+        doNothing().when(ownerService).changePassword(1L, "newPass");
 
-        ResponseEntity<Void> result = controller.trocarSenha(1L, "newPass");
+        ResponseEntity<Void> result = controller.changePassword(1L, "newPass");
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        verify(ownerService, times(1)).trocarSenha(1L, "newPass");
+        verify(ownerService, times(1)).changePassword(1L, "newPass");
     }
 }
