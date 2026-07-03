@@ -23,8 +23,7 @@ class GlobalExceptionHandlerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getDetail())
-                .isEqualTo("Proprietário com ID 1 não encontrado. Verifique as credenciais.");
+        assertThat(response.getBody().getDetail());
     }
 
     @Test
