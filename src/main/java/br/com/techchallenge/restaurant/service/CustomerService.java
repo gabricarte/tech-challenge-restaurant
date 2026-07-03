@@ -3,8 +3,11 @@ package br.com.techchallenge.restaurant.service;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
 import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
+import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.domain.enums.UserTypeEnum;
+import br.com.techchallenge.restaurant.exception.CustomerNotFoundException;
+import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserTypeNotFoundException;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
@@ -44,19 +47,26 @@ public class CustomerService {
 
     public CustomerResponseDTO findById(Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new CustomerNotFoundException(id));
         return customerMapper.toDTO(customer);
     }
 
     @Transactional
     public CustomerResponseDTO updateData(Long id, CustomerRequestDTO dto) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new CustomerNotFoundException(id));
 
         customer.setName(dto.name());
         customer.setEmail(dto.email());
         customer.setBirthDate(dto.birthDate());
 
         return customerMapper.toDTO(customerRepository.save(customer));
+    }
+
+    public void delete(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+
+        customerRepository.delete(customer);
     }
 }

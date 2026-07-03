@@ -94,4 +94,14 @@ class OwnerControllerTest {
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         verify(ownerService, times(1)).changePassword(1L, "newPass");
     }
+
+    @Test
+    void testDelete_Success() {
+        doNothing().when(ownerService).delete(1L);
+
+        ResponseEntity<Void> response = controller.delete(1L);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        verify(ownerService, times(1)).delete(1L);
+    }
 }

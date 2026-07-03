@@ -90,14 +90,4 @@ class UserControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         verify(userService, times(1)).trocarSenha(1L, "newPass123");
     }
-
-    @Test
-    void testDeletar_Success() {
-        doNothing().when(userService).delete(1L);
-
-        ResponseEntity<Void> response = controller.delete(1L);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        verify(userService, times(1)).delete(1L);
-    }
 }
