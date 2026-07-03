@@ -43,7 +43,7 @@ public class CustomerController {
 
     @Operation(summary = "Atualiza os dados de um cliente")
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDTO> atualizar(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
-        return ResponseEntity.ok(customerService.atualizarDados(id, dto));
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
+        return ResponseEntity.ok(customerService.updateData(id, dto));
     }
 }
