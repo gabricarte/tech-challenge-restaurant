@@ -58,11 +58,4 @@ public class UserController {
         userService.trocarSenha(id, newPassword);
         return ResponseEntity.noContent().build();
     }
-
-    @Operation(summary = "Deleta um usuário")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }

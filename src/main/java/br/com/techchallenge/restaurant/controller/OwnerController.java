@@ -52,4 +52,10 @@ public class OwnerController {
         ownerService.changePassword(id, novaSenha);
         return ResponseEntity.noContent().build();
     }
+    @Operation(summary = "Deleta um proprietário")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        ownerService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

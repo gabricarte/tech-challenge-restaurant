@@ -68,4 +68,14 @@ class CustomerControllerTest {
             assertThat(result.getBody().id()).isEqualTo(1L);
             verify(customerService, times(1)).save(any());
         }
+
+    @Test
+    void testDelete_Success() {
+        doNothing().when(customerService).delete(1L);
+
+        ResponseEntity<Void> response = controller.delete(1L);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        verify(customerService, times(1)).delete(1L);
     }
+}

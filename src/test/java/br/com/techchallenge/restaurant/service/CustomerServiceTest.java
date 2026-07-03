@@ -211,4 +211,14 @@ class CustomerServiceTest {
         assertThatThrownBy(() -> customerService.updateData(999L, dto))
                 .isInstanceOf(RuntimeException.class);
     }
+
+    @Test
+    void testDelete_Success() {
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        doNothing().when(customerRepository).delete(any());
+
+        customerService.delete(1L);
+
+        verify(customerRepository, times(1)).delete(customer);
+    }
 }

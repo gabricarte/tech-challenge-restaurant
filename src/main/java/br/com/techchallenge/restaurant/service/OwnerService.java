@@ -68,6 +68,12 @@ public class OwnerService {
         ownerRepository.save(owner);
     }
 
+    public void delete(Long id) {
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new OwnerNotFoundException(id));
+        ownerRepository.delete(owner);
+    }
+
     private OwnerResponseDTO toResponseDTO(Owner owner) {
         return new OwnerResponseDTO(
                 owner.getId(),
