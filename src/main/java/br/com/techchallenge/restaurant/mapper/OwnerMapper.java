@@ -12,7 +12,8 @@ public class OwnerMapper {
                 owner.getName(),
                 owner.getEmail(),
                 owner.getAddress(),
-                owner.getLastUpdate()
+                owner.getLastUpdate(),
+                owner.getUserType()
         );
     }
 }

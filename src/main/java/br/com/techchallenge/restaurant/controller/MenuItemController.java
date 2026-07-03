@@ -2,6 +2,8 @@ package br.com.techchallenge.restaurant.controller;
 
 import br.com.techchallenge.restaurant.domain.entity.MenuItem;
 import br.com.techchallenge.restaurant.service.MenuItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/menu-items")
+@Tag(name = "Menu itens", description = "Endpoints para gestão de itens de menu")
 public class MenuItemController {
 
     @Autowired
     private MenuItemService menuItemService;
 
+    @Operation(summary = "Cria um item de menu")
     @PostMapping("/{restaurantId}")
     public ResponseEntity<MenuItem> create(
             @RequestBody MenuItem menuItem,
@@ -24,6 +28,7 @@ public class MenuItemController {
                 .body(menuItemService.create(menuItem, restaurantId));
     }
 
+    @Operation(summary = "Encontra um item de menu")
     @GetMapping("/{id}")
     public ResponseEntity<MenuItem> findById(@PathVariable Long id) {
 
@@ -32,6 +37,7 @@ public class MenuItemController {
         );
     }
 
+    @Operation(summary = "Encontra todos itens")
     @GetMapping
     public ResponseEntity<List<MenuItem>> findAll() {
 
@@ -40,6 +46,7 @@ public class MenuItemController {
         );
     }
 
+    @Operation(summary = "Encontra itens por restaurante")
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<MenuItem>> findByRestaurant(
             @PathVariable Long restaurantId) {
@@ -49,6 +56,7 @@ public class MenuItemController {
         );
     }
 
+    @Operation(summary = "Atualiza item")
     @PutMapping("/{id}")
     public ResponseEntity<MenuItem> update(
             @PathVariable Long id,
@@ -59,6 +67,7 @@ public class MenuItemController {
         );
     }
 
+    @Operation(summary = "Deleta item")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 

@@ -3,26 +3,33 @@ package br.com.techchallenge.restaurant.service;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.dto.request.OwnerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.OwnerResponseDTO;
+import br.com.techchallenge.restaurant.domain.entity.UserType;
+import br.com.techchallenge.restaurant.domain.enums.UserTypeEnum;
 import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
+import br.com.techchallenge.restaurant.exception.UserTypeNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
+import br.com.techchallenge.restaurant.repository.UserTypeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OwnerService {
-
     private final OwnerRepository ownerRepository;
-
-    public OwnerService(OwnerRepository ownerRepository) {
-        this.ownerRepository = ownerRepository;
-    }
+    private final UserTypeRepository userTypeRepository;
 
     @Transactional
     public OwnerResponseDTO save(OwnerRequestDTO dto) {
         Owner owner = new Owner();
-        updateEntityFromDTO(owner, dto);
+        Long ownerTypeId = UserTypeEnum.OWNER.getId();
+
+        UserType ownerType = userTypeRepository.findById(ownerTypeId)
+                .orElseThrow(() -> new UserTypeNotFoundException(ownerTypeId));
+
+        updateEntityFromDTO(owner, dto, ownerType);
 
         Owner savedOwner = ownerRepository.save(owner);
         return toResponseDTO(savedOwner);
@@ -67,15 +74,17 @@ public class OwnerService {
                 owner.getName(),
                 owner.getEmail(),
                 owner.getAddress(),
-                owner.getLastUpdate()
+                owner.getLastUpdate(),
+                owner.getUserType()
         );
     }
 
-    private void updateEntityFromDTO(Owner owner, OwnerRequestDTO dto) {
+    private void updateEntityFromDTO(Owner owner, OwnerRequestDTO dto, UserType ownerType) {
         owner.setName(dto.name());
         owner.setEmail(dto.email());
         owner.setLogin(dto.login());
         owner.setPassword(dto.password());
         owner.setAddress(dto.address());
+        owner.setUserType(ownerType);
     }
 }

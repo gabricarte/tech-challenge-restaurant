@@ -151,11 +151,11 @@ class UserServiceTest {
     }
 
     @Test
-    void testDeletar_Success() {
+    void testDelete_Success() {
         when(ownerRepository.findById(1L)).thenReturn(Optional.of(owner));
         doNothing().when(ownerRepository).delete(any());
 
-        userService.deletar(1L);
+        userService.delete(1L);
 
         verify(ownerRepository, times(1)).delete(owner);
     }

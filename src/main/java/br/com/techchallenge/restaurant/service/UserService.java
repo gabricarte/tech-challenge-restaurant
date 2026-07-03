@@ -62,7 +62,7 @@ public class UserService {
                 .orElseThrow(() -> new OwnerNotFoundException(id));
     }
 
-    public void deletar(Long id) {
+    public void delete(Long id) {
         Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new OwnerNotFoundException(id));
         ownerRepository.delete(owner);

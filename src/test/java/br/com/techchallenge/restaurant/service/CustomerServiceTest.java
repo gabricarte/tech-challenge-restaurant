@@ -3,8 +3,10 @@ package br.com.techchallenge.restaurant.service;
 import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
+import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
+import br.com.techchallenge.restaurant.repository.UserTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +28,9 @@ class CustomerServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private UserTypeRepository userTypeRepository;
 
     @Mock
     private CustomerMapper customerMapper;
@@ -76,6 +81,7 @@ class CustomerServiceTest {
         when(customerMapper.toEntity(any())).thenReturn(customer);
         when(customerRepository.save(any())).thenReturn(customer);
         when(customerMapper.toDTO(customer)).thenReturn(responseDTO);
+        when(userTypeRepository.findById(any())).thenReturn(Optional.of(new UserType(2L, "Cliente")));
 
         CustomerResponseDTO result = customerService.save(dto);
 

@@ -3,8 +3,10 @@ package br.com.techchallenge.restaurant.service;
 import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.dto.request.OwnerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.OwnerResponseDTO;
+import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
+import br.com.techchallenge.restaurant.repository.UserTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +29,9 @@ class OwnerServiceTest {
     @Mock
     private OwnerRepository ownerRepository;
 
+    @Mock
+    private UserTypeRepository userTypeRepository;
+
     @InjectMocks
     private OwnerService ownerService;
 
@@ -37,6 +42,8 @@ class OwnerServiceTest {
         owner = new Owner();
         owner.setId(1L);
         owner.setName("Owner 1");
+        UserType userType = new UserType(1L, "Dono de Restaurante");
+        owner.setUserType(userType);
     }
 
     @Test
@@ -50,7 +57,10 @@ class OwnerServiceTest {
                 LocalDateTime.now()
         );
 
+        UserType userType = new UserType(1L, "Dono de Restaurante");
+
         when(ownerRepository.save(any())).thenReturn(owner);
+        when(userTypeRepository.findById(1L)).thenReturn(Optional.of(userType));
 
         OwnerResponseDTO result = ownerService.save(dto);
 

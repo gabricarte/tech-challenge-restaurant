@@ -2,6 +2,7 @@ package br.com.techchallenge.restaurant.controller;
 
 import br.com.techchallenge.restaurant.domain.dto.request.OwnerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.OwnerResponseDTO;
+import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.service.OwnerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class OwnerControllerTest {
     @BeforeEach
     void setUp() {
         requestDTO = new OwnerRequestDTO("Owner", "owner@test.com", "login", "pass", "addr", LocalDateTime.now());
-        responseDTO = new OwnerResponseDTO(1L, "Owner", "owner@test.com", "addr", LocalDateTime.now());
+        responseDTO = new OwnerResponseDTO(1L, "Owner", "owner@test.com", "addr", LocalDateTime.now(), new UserType(1L, "Dono de Restaurante"));
     }
 
     @Test
