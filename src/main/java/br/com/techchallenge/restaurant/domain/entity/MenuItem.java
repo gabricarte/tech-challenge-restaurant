@@ -26,6 +26,7 @@ public class MenuItem {
 
     private Boolean available;
 
+    @Column(name = "image_path")
     private String imagePath;
 
     @ManyToOne
