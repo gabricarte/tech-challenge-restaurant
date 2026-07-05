@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "f4252702-7ec7-4155-bf78-f2b32219887d",
-    "name": "Restaurant API",
+    "name": "Restaurant Project",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "54079861",
     "_collection_link": "https://go.postman.co/collection/54079861-f4252702-7ec7-4155-bf78-f2b32219887d?source=collection_link"
@@ -64,40 +64,12 @@
               "response": []
             },
             {
-              "name": "Busca de proprietários pelo nome com erro (Não encontrado)",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners/search?name=adriana",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners",
-                    "search"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "adriana"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
               "name": "Busca de proprietários pelo id",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/owners/3",
+                  "raw": "http://localhost:8080/api/v1/owners/11",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -107,7 +79,7 @@
                     "api",
                     "v1",
                     "owners",
-                    "3"
+                    "11"
                   ]
                 }
               },
@@ -126,66 +98,6 @@
                 "body": {
                   "mode": "raw",
                   "raw": "{\r\n  \"name\": \"Mariana Costa\",\r\n  \"email\": \"mariana.burger@restaurante.com.br\",\r\n  \"login\": \"mari_burger\",\r\n  \"password\": \"BurgerArt@2026\",\r\n  \"address\": \"Rua dos Pinheiros, 800, Pinheiros, São Paulo - SP, 05422-001\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Cadastro de proprietário com erro (Faltando e-mail no body)",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricardo Almeida\",\r\n  \"login\": \"ricardo_owner\",\r\n  \"password\": \"StrongPassword!2026\",\r\n  \"address\": \"Avenida Paulista, 1500, Bela Vista, São Paulo - SP, 01311-200\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Cadastro de proprietário com erro (E-mail duplicado)",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricardo Almeida\",\r\n  \"email\": \"ricardo.proprietario@restaurante.com.br\",\r\n  \"login\": \"ricardo_owner\",\r\n  \"password\": \"StrongPassword!2026\",\r\n  \"address\": \"Avenida Paulista, 1500, Bela Vista, São Paulo - SP, 01311-200\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -245,38 +157,6 @@
           "name": "PATCH",
           "item": [
             {
-              "name": "Alteração de senha de proprietário com erro (Sem body)",
-              "request": {
-                "method": "PATCH",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners/1/password",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners",
-                    "1",
-                    "password"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
               "name": "Alteração de senha de proprietário com sucesso",
               "request": {
                 "method": "PATCH",
@@ -314,44 +194,13 @@
           "name": "PUT",
           "item": [
             {
-              "name": "Atualização de dados de proprietário com erro (Faltando nome no body)",
-              "request": {
-                "method": "PUT",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"login\": \"ricardo_adm\",\r\n  \"email\": \"ricardo.adm@restaurante.com.br\",\r\n  \"address\": \"Alameda Santos, 1000, Cerqueira César, São Paulo - SP, 01418-100\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners/1",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners",
-                    "1"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
               "name": "Atualização de dados de proprietário com sucesso",
               "request": {
                 "method": "PUT",
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"login\": \"ricardo_adm\",\r\n  \"name\": \"Ricardo Souza\",\r\n  \"email\": \"ricardo.adm@restaurante.com.br\",\r\n  \"address\": \"Alameda Santos, 1000, Cerqueira César, São Paulo - SP, 01418-100\"\r\n}",
+                  "raw": "{\r\n  \"login\": \"ricardo_adm\",\r\n  \"name\": \"Ricardo Almeida Junior\",\r\n  \"email\": \"ricardo.adm@restaurante.com.br\",\r\n  \"address\": \"Alameda Santos, 1000, Cerqueira César, São Paulo - SP, 01418-100\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -386,7 +235,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/owners/2",
+                  "raw": "http://localhost:8080/api/v1/owners/44",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -396,7 +245,7 @@
                     "api",
                     "v1",
                     "owners",
-                    "2"
+                    "44"
                   ]
                 }
               },
@@ -462,40 +311,12 @@
               "response": []
             },
             {
-              "name": "Busca de clientes pelo nome com erro (Não encontrado)",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/search?name=adriana",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "customers",
-                    "search"
-                  ],
-                  "query": [
-                    {
-                      "key": "name",
-                      "value": "adriana"
-                    }
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
               "name": "Busca de cliente pelo id",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/1",
+                  "raw": "http://localhost:8080/api/v1/customers/11",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -505,7 +326,7 @@
                     "api",
                     "v1",
                     "customers",
-                    "1"
+                    "11"
                   ]
                 }
               },
@@ -523,7 +344,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Carlos Eduardo Lima\",\r\n  \"email\": \"carlos.lima@techmail.com\",\r\n  \"cpf\": \"987.654.321-00\",\r\n  \"login\": \"cadu_dev\",\r\n  \"telephone\": \"(11) 97777-6666\",\r\n  \"address\": \"Rua Augusta, 500, Consolação, São Paulo - SP\",\r\n  \"password\": \"SenhaForte#2026\",\r\n  \"birthDate\": \"1990-10-25\"\r\n}",
+                  "raw": "{\r\n  \"name\": \"Carlos Eduardo Lima\",\r\n  \"email\": \"carlos.lima@hotmail.com\",\r\n  \"cpf\": \"987.654.321-00\",\r\n  \"login\": \"cadu_dev\",\r\n  \"telephone\": \"(11) 97777-6666\",\r\n  \"address\": \"Rua Augusta, 500, Consolação, São Paulo - SP\",\r\n  \"password\": \"SenhaForte#2026\",\r\n  \"birthDate\": \"1990-10-25\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -541,66 +362,6 @@
                     "api",
                     "v1",
                     "customers"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Cadastro de cliente com erro (Faltando e-mail no body)",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Carlos Eduardo Lima\",\r\n  \"cpf\": \"987.654.321-00\",\r\n  \"login\": \"cadu_dev\",\r\n  \"telephone\": \"(11) 97777-6666\",\r\n  \"address\": \"Rua Augusta, 500, Consolação, São Paulo - SP\",\r\n  \"password\": \"SenhaForte#2026\",\r\n  \"birthDate\": \"1990-10-25\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/customers",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "customers"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Cadastro de cliente com erro (E-mail duplicado)",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ana Souza\",\r\n  \"email\": \"ana.souza@email.com\",\r\n  \"cpf\": \"123.456.789-01\",\r\n  \"login\": \"ana_cliente\",\r\n  \"telephone\": \"(11) 98888-7777\",\r\n  \"address\": \"Rua das Flores, 123, São Paulo - SP\",\r\n  \"password\": \"Cliente#123\",\r\n  \"birthDate\": \"1995-03-15\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/owners",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "owners"
                   ]
                 }
               },
@@ -643,45 +404,13 @@
           "name": "PATCH",
           "item": [
             {
-              "name": "Alteração de senha de cliente com erro (Sem body)",
-              "request": {
-                "method": "PATCH",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/1/password",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "customers",
-                    "1",
-                    "password"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
               "name": "Alteração de senha de cliente com sucesso",
               "request": {
                 "method": "PATCH",
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"newPassword\": \"123NewPassword_\"\r\n}",
+                  "raw": "{\r\n    \"newPassword\": \"123NewPassword!\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -689,7 +418,7 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/1/password",
+                  "raw": "http://localhost:8080/api/v1/users/1/password",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -698,7 +427,7 @@
                   "path": [
                     "api",
                     "v1",
-                    "customers",
+                    "users",
                     "1",
                     "password"
                   ]
@@ -718,38 +447,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ana Souza\",\r\n  \"email\": \"ana.souza@email.com\",\r\n  \"cpf\": \"123.456.789-01\",\r\n  \"login\": \"ana_cliente\",\r\n  \"telephone\": \"(11) 98888-7777\",\r\n  \"address\": \"Avenida Paulista, 2000, Bela Vista, São Paulo - SP, 01310-300\",\r\n  \"birthDate\": \"1995-03-15\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/1",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8080",
-                  "path": [
-                    "api",
-                    "v1",
-                    "customers",
-                    "1"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Atualização de dados de cliente com erro (Faltando nome no body)",
-              "request": {
-                "method": "PUT",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"ana.souza@email.com\",\r\n  \"cpf\": \"123.456.789-01\",\r\n  \"login\": \"ana_cliente\",\r\n  \"telephone\": \"(11) 98888-7777\",\r\n  \"address\": \"Avenida Paulista, 2000, Bela Vista, São Paulo - SP, 01310-300\",\r\n  \"birthDate\": \"1995-03-15\"\r\n}",
+                  "raw": "{\r\n  \"name\": \"Ana Souza Lima Ribeiro\",\r\n  \"email\": \"ana.souza@email.com\",\r\n  \"cpf\": \"123.456.789-01\",\r\n  \"login\": \"ana_cliente\",\r\n  \"telephone\": \"(11) 98888-7777\",\r\n  \"address\": \"Avenida Paulista, 2000, Bela Vista, São Paulo - SP, 01310-300\",\r\n  \"birthDate\": \"1995-03-15\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -784,7 +482,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/customers/2",
+                  "raw": "http://localhost:8080/api/v1/customers/6",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -794,7 +492,7 @@
                     "api",
                     "v1",
                     "customers",
-                    "2"
+                    "6"
                   ]
                 }
               },
@@ -904,7 +602,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/restaurants/1",
+                  "raw": "http://localhost:8080/api/v1/restaurants/71111",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -914,7 +612,7 @@
                     "api",
                     "v1",
                     "restaurants",
-                    "1"
+                    "71111"
                   ]
                 }
               },
@@ -937,7 +635,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\": \"Sabor Brasileiro\",\n    \"address\": \"Rua da Consolação, 1200, São Paulo - SP\",\n    \"cuisineType\": \"Brasileira\",\n    \"capacity\": 50\n}"
+                  "raw": "{\n  \"name\": \"Bistrô Sabor e Arte\",\n  \"address\": \"Rua Augusta, 1500, Consolação, São Paulo - SP\",\n  \"cuisineType\": \"Contemporânea\",\n  \"capacity\": 80,\n  \"openingTime\": \"18:00:00\",\n  \"closingTime\": \"23:30:00\"\n}"
                 },
                 "url": {
                   "raw": "http://localhost:8080/api/v1/restaurants/1",
@@ -973,10 +671,10 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\": \"Sabor Brasileiro - Matriz\",\n    \"address\": \"Rua da Consolação, 1200, São Paulo - SP\",\n    \"cuisineType\": \"Brasileira Contemporânea\",\n    \"capacity\": 65\n}"
+                  "raw": "{\n    \"name\": \"Sabor Brasileiro - Matriz\",\n    \"address\": \"Rua da Consolação, 1200, São Paulo - SP\",\n    \"cuisineType\": \"Brasileira Contemporânea\",\n    \"capacity\": 100\n}"
                 },
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/restaurants/1",
+                  "raw": "http://localhost:8080/api/v1/restaurants/2",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -986,7 +684,7 @@
                     "api",
                     "v1",
                     "restaurants",
-                    "1"
+                    "2"
                   ]
                 }
               },
@@ -1003,7 +701,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/api/v1/restaurants/1",
+                  "raw": "http://localhost:8080/api/v1/restaurants/9",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1013,7 +711,377 @@
                     "api",
                     "v1",
                     "restaurants",
+                    "9"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Menu Item",
+      "item": [
+        {
+          "name": "GET",
+          "item": [
+            {
+              "name": "Obter todos itens dos menus",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Prato Feito Tradicional\",\n  \"description\": \"Arroz, feijão, bife acebolado, batata frita e ovo frito.\",\n  \"price\": 35.90,\n  \"available\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/menu-items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "menu-items"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Obter itens do menu por restaurante",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Prato Feito Tradicional\",\n  \"description\": \"Arroz, feijão, bife acebolado, batata frita e ovo frito.\",\n  \"price\": 35.90,\n  \"available\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/menu-items/restaurant/2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "menu-items",
+                    "restaurant",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "POST",
+          "item": [
+            {
+              "name": "Cadastrar item do menu",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Feijoada Completa\",\n  \"description\": \"Feijoada com carnes nobres, acompanhada de arroz branco, couve manteiga refogada, farofa crocante e fatias de laranja.\",\n  \"price\": 68.90,\n  \"available\": true,\n  \"imagePath\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjzrII5RsnkyG-3Yf-nVIEI_ggKYS3G-f1jKCnVJYmG4Y-BTZyEThWjMg4&s=10\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/menu-items/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "menu-items",
                     "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "DELETE",
+          "item": [
+            {
+              "name": "Deletar item do menu por ID",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Prato Feito Tradicional\",\n  \"description\": \"Arroz, feijão, bife acebolado, batata frita e ovo frito.\",\n  \"price\": 35.90,\n  \"available\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/menu-items/2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "menu-items",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "UPDATE",
+          "item": [
+            {
+              "name": "Atualizar item do menu por ID",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Feijoada Completa\",\n  \"description\": \"Feijoada com carnes nobres, acompanhada de arroz branco, couve manteiga refogada, farofa crocante e fatias de laranja.\",\n  \"price\": 68.90,\n  \"available\": true,\n  \"imagePath\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjzrII5RsnkyG-3Yf-nVIEI_ggKYS3G-f1jKCnVJYmG4Y-BTZyEThWjMg4&s=10\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/menu-items/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "menu-items",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UserType",
+      "item": [
+        {
+          "name": "GET",
+          "item": [
+            {
+              "name": "Obter todos tipos de usuários",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Prato Feito Tradicional\",\n  \"description\": \"Arroz, feijão, bife acebolado, batata frita e ovo frito.\",\n  \"price\": 35.90,\n  \"available\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/user-types",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user-types"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Obter tipo de usuário por ID",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Prato Feito Tradicional\",\n  \"description\": \"Arroz, feijão, bife acebolado, batata frita e ovo frito.\",\n  \"price\": 35.90,\n  \"available\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/user-types/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user-types",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "POST",
+          "item": [
+            {
+              "name": "Cadastrar um tipo de usuário",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\": \"Administrador\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/user-types",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user-types"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "PUT",
+          "item": [
+            {
+              "name": "Atualizar um tipo de usuário por id",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\": \"Administrador de sistema\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/user-types/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user-types",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "DELETE",
+          "item": [
+            {
+              "name": "Deletar um tipo de usuário por id",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"name\": \"Administrador de sistema\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/user-types/4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user-types",
+                    "4"
                   ]
                 }
               },
