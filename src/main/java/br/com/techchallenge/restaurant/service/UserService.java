@@ -10,20 +10,18 @@ import br.com.techchallenge.restaurant.exception.UserNotFoundException;
 import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final OwnerRepository ownerRepository;
 
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     public void validarLogin(String login, String senha) {
         User user = ownerRepository.findByLogin(login)

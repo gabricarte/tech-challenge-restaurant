@@ -6,19 +6,18 @@ import br.com.techchallenge.restaurant.exception.MenuItemNotFoundException;
 import br.com.techchallenge.restaurant.exception.RestaurantNotFoundException;
 import br.com.techchallenge.restaurant.repository.MenuItemRepository;
 import br.com.techchallenge.restaurant.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MenuItemService {
+    private final MenuItemRepository menuItemRepository;
 
-    @Autowired
-    private MenuItemRepository menuItemRepository;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public MenuItem create(MenuItem menuItem, Long restaurantId) {
 

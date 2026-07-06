@@ -4,6 +4,7 @@ import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.service.UserTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user-types")
+@RequiredArgsConstructor
 @Tag(name = "Tipos de usuário", description = "Endpoints para gestão de tipos de usuários")
 public class UserTypeController {
 
-    @Autowired
-    private UserTypeService userTypeService;
+    private final UserTypeService userTypeService;
 
     @Operation(summary = "Cria um tipo de usuário")
     @PostMapping
