@@ -12,6 +12,7 @@ import br.com.techchallenge.restaurant.exception.UserTypeNotFoundException;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
 import br.com.techchallenge.restaurant.repository.UserTypeRepository;
+import br.com.techchallenge.restaurant.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerService {
 
+    private final UserValidator userValidator;
     private final CustomerRepository customerRepository;
     private final UserTypeRepository userTypeRepository;
     private final CustomerMapper customerMapper;
 
     @Transactional
     public CustomerResponseDTO save(CustomerRequestDTO dto) {
+        userValidator.validateEmailDuplicated(dto.email());
+
         Customer customer = customerMapper.toEntity(dto);
 
         Long customerTypeId = UserTypeEnum.CUSTOMER.getId();
