@@ -7,6 +7,7 @@ import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
 import br.com.techchallenge.restaurant.repository.UserTypeRepository;
+import br.com.techchallenge.restaurant.util.UserValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +35,9 @@ class CustomerServiceTest {
 
     @Mock
     private CustomerMapper customerMapper;
+
+    @Mock
+    private UserValidator userValidator;
 
     @InjectMocks
     private CustomerService customerService;
