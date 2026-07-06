@@ -7,6 +7,7 @@ import br.com.techchallenge.restaurant.mapper.UserMapper;
 import br.com.techchallenge.restaurant.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 @Tag(name = "Usuários", description = "Endpoints para gestão de usuários")
 public class UserController {
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Operation(summary = "Realiza login de um usuário")
     @PostMapping("/login")
