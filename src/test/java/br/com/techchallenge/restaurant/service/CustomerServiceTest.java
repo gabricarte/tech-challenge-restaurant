@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.service;
 
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
 import br.com.techchallenge.restaurant.domain.entity.UserType;
@@ -56,7 +56,7 @@ class CustomerServiceTest {
     @Test
     void testSave_ValidCustomer_Success() {
 
-        CustomerRequestDTO dto = new CustomerRequestDTO(
+        CustomerUpdateRequestDTO dto = new CustomerUpdateRequestDTO(
                 "Customer 1",
                 "c@test.com",
                 "123",
@@ -159,7 +159,7 @@ class CustomerServiceTest {
     @Test
     void testAtualizarDados() {
 
-        CustomerRequestDTO dto = new CustomerRequestDTO(
+        CustomerUpdateRequestDTO dto = new CustomerUpdateRequestDTO(
                 "Updated",
                 "updated@test.com",
                 "321",
@@ -195,7 +195,7 @@ class CustomerServiceTest {
     @Test
     void testAtualizarDados_NotFound() {
 
-        CustomerRequestDTO dto = new CustomerRequestDTO(
+        CustomerUpdateRequestDTO dto = new CustomerUpdateRequestDTO(
                 "Updated",
                 "updated@test.com",
                 "321",

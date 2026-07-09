@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,7 @@ public class CustomerController {
 
     @Operation(summary = "Salva um cliente")
     @PostMapping
-    public ResponseEntity<CustomerResponseDTO> save(@RequestBody CustomerRequestDTO dto) {
+    public ResponseEntity<CustomerResponseDTO> save(@RequestBody CustomerUpdateRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(dto));
     }
 
@@ -43,7 +43,7 @@ public class CustomerController {
 
     @Operation(summary = "Atualiza os dados de um cliente")
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerUpdateRequestDTO dto) {
         return ResponseEntity.ok(customerService.updateData(id, dto));
     }
 

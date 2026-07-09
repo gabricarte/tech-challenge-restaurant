@@ -1,13 +1,11 @@
 package br.com.techchallenge.restaurant.service;
 
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
-import br.com.techchallenge.restaurant.domain.entity.Owner;
 import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.domain.enums.UserTypeEnum;
 import br.com.techchallenge.restaurant.exception.CustomerNotFoundException;
-import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserTypeNotFoundException;
 import br.com.techchallenge.restaurant.mapper.CustomerMapper;
 import br.com.techchallenge.restaurant.repository.CustomerRepository;
@@ -26,7 +24,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
 
     @Transactional
-    public CustomerResponseDTO save(CustomerRequestDTO dto) {
+    public CustomerResponseDTO save(CustomerUpdateRequestDTO dto) {
         Customer customer = customerMapper.toEntity(dto);
 
         Long customerTypeId = UserTypeEnum.CUSTOMER.getId();
@@ -52,7 +50,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerResponseDTO updateData(Long id, CustomerRequestDTO dto) {
+    public CustomerResponseDTO updateData(Long id, CustomerUpdateRequestDTO dto) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
 

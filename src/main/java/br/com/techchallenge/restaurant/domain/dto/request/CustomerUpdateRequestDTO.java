@@ -1,4 +1,4 @@
-package br.com.techchallenge.restaurant.domain.dto;
+package br.com.techchallenge.restaurant.domain.dto.request;
 
 import jakarta.validation.constraints.*;
 
@@ -24,6 +24,9 @@ public record CustomerUpdateRequestDTO(
 
         @NotBlank(message = "O endereço é obrigatório")
         String address,
+
+        @NotBlank(message = "A senha é obrigatório")
+        String password,
 
         @NotNull(message = "A data de nascimento é obrigatória")
         @Past(message = "A data de nascimento deve ser uma data no passado")

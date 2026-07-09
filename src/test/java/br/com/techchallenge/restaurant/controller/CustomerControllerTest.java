@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.controller;
 
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +14,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,13 +28,13 @@ class CustomerControllerTest {
     @InjectMocks
     private CustomerController controller;
 
-    private CustomerRequestDTO requestDTO;
+    private CustomerUpdateRequestDTO requestDTO;
     private CustomerResponseDTO responseDTO;
 
     @BeforeEach
     void setUp() {
 
-        requestDTO = new CustomerRequestDTO(
+        requestDTO = new CustomerUpdateRequestDTO(
                 "Cliente",
                 "client@test.com",
                 "123",

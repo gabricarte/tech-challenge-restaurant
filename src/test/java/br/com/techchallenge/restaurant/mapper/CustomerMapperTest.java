@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.mapper;
 
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class CustomerMapperTest {
     @Test
     void testToEntity_MapsAllFields() {
 
-        CustomerRequestDTO dto = new CustomerRequestDTO(
+        CustomerUpdateRequestDTO dto = new CustomerUpdateRequestDTO(
                 "Jane",
                 "jane@test.com",
                 "12345678901",

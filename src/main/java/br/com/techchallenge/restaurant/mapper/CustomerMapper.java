@@ -1,6 +1,6 @@
 package br.com.techchallenge.restaurant.mapper;
 
-import br.com.techchallenge.restaurant.domain.dto.request.CustomerRequestDTO;
+import br.com.techchallenge.restaurant.domain.dto.request.CustomerUpdateRequestDTO;
 import br.com.techchallenge.restaurant.domain.dto.response.CustomerResponseDTO;
 import br.com.techchallenge.restaurant.domain.entity.Customer;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class CustomerMapper {
         );
     }
 
-    public Customer toEntity(CustomerRequestDTO dto) {
+    public Customer toEntity(CustomerUpdateRequestDTO dto) {
         Customer customer = new Customer();
         customer.setName(dto.name());
         customer.setEmail(dto.email());
