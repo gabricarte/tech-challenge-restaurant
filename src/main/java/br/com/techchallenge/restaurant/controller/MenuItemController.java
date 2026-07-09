@@ -4,6 +4,7 @@ import br.com.techchallenge.restaurant.domain.entity.MenuItem;
 import br.com.techchallenge.restaurant.service.MenuItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/menu-items")
+@RequiredArgsConstructor
 @Tag(name = "Menu itens", description = "Endpoints para gestão de itens de menu")
 public class MenuItemController {
 
-    @Autowired
-    private MenuItemService menuItemService;
+    private final MenuItemService menuItemService;
 
     @Operation(summary = "Cria um item de menu")
     @PostMapping("/{restaurantId}")

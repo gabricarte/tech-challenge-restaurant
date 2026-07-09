@@ -9,6 +9,7 @@ import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.exception.UserTypeNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.UserTypeRepository;
+import br.com.techchallenge.restaurant.util.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +19,14 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OwnerService {
+    private final UserValidator userValidator;
     private final OwnerRepository ownerRepository;
     private final UserTypeRepository userTypeRepository;
 
     @Transactional
     public OwnerResponseDTO save(OwnerRequestDTO dto) {
+        userValidator.validateEmailDuplicated(dto.email());
+
         Owner owner = new Owner();
         Long ownerTypeId = UserTypeEnum.OWNER.getId();
 

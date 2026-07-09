@@ -7,6 +7,7 @@ import br.com.techchallenge.restaurant.domain.entity.UserType;
 import br.com.techchallenge.restaurant.exception.OwnerNotFoundException;
 import br.com.techchallenge.restaurant.repository.OwnerRepository;
 import br.com.techchallenge.restaurant.repository.UserTypeRepository;
+import br.com.techchallenge.restaurant.util.UserValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,9 @@ class OwnerServiceTest {
 
     @Mock
     private UserTypeRepository userTypeRepository;
+
+    @Mock
+    private UserValidator userValidator;
 
     @InjectMocks
     private OwnerService ownerService;
